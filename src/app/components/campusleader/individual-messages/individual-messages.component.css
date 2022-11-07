@@ -1,0 +1,16 @@
+.select-button-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.select-label {
+  width: 100%;
+}
+.select-container {
+  padding-right: 8px;
+  width: 60%;
+}
+.searchbtn-container {
+  width: 35%;
+  padding-left: 8px;
+}

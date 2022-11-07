@@ -1,0 +1,113 @@
+<main id="top" role="main" class="p-l-15 p-r-15">
+	<div class="row">
+        <div class="col-lg-6">
+			<h1> <span>{{'view.teacher.landing.subtitle'  | translate}}</span></h1>
+		</div>
+		<div class="col">
+			<div class="alert alert-info ng-binding text-center" *ngIf="newVersion">
+				<h2>{{'New App Title' | translate}}</h2>
+				{{'New App Description' | translate}}
+				<button class="btn btn-primary w-100 m-t-10" (click)="redirectToStore()">{{'Update' | translate}}</button>
+			</div>
+		</div>
+	</div>
+	<div class="card">
+		<div class="card-body">
+			<ul class="nav nav-tabs mb-3" id="pills-tab" role="tabpanel">
+				<li class="nav-item">
+					<a class="nav-link active" id="pills-home-tab" data-toggle="tab" href="#pills-home" role="tab"
+						aria-controls="pills-home" aria-selected="true">{{'view.teacher.landing.studentsTab' | translate }}</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="pills-profile-tab" data-toggle="tab" href="#pills-profile" role="tab"
+						aria-controls="pills-profile" aria-selected="false">{{'view.teacher.landing.groupsTab' | translate }}</a>
+				</li>
+			</ul>
+			<div class="tab-content" id="pills-tabContent">
+				<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+					<form class="ng-pristine ng-valid">
+						<div class="form-group">
+							<label for="studentName">{{'Student Name'  | translate}}</label>
+							<input type="text" class="form-control" id="studentName" [(ngModel)]="StudentName"
+								name="studentName" />
+						</div>
+						<div class="row">
+
+							<div class="col-6">
+								<div class="form-group">
+									<label for="sectionId">  {{'Sections'  | translate}} </label>
+									<select id="sectionId" name="sectionId" class="form-control"
+										[(ngModel)]="section" (change)="onChangeSection()">
+										<option value="All Sections" [selected]="true">All Sections</option>
+										<option [ngValue]="item" *ngFor="let item of model">
+											{{item.localCourseCode}} {{item.courseTitle}} {{ item.classPeriodName}}
+										</option>
+									</select>
+								</div>
+
+							</div>
+
+							<div class="form-group col-6">
+								<label for="orderBy">{{'Order by'  | translate}}</label>
+								<select id="orderBy" name="orderBy" (change)="onChange($event.target.value)" class="form-control"
+									[(ngModel)]="orderValue" [value]="0">
+									<!--<option value="'0'" [selected]="true">Default</option>-->
+									<option [(ngValue)]="item.Id" *ngFor="let item of orderBy"> {{item.text}}</option>
+								</select>
+							</div>
+
+						</div>
+						<div class="row">
+							<div class="col align-items-right">
+								<div class="input-group-append p-10 f-s-18 d-flex justify-content-center align-items-center btn btn-fill-search"
+									(click)="getTeacherStudents()">
+									<span>{{'Search' | translate }}</span><i class="ion ion-md-search"></i>
+								</div>
+							</div>
+						</div>
+
+					</form>
+
+					<div>
+						<div class="card mb-2">
+							<div class="card-body">
+
+
+								<div *ngIf="students.length > 0">
+									<app-teacher-student-list [students]="students"></app-teacher-student-list>
+								</div>
+
+
+							</div>
+						</div>
+
+					</div>
+
+
+				</div>
+				<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+					<ul class="nav nav-tabs mb-3" id="pills-tabGroups" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link active" style="padding: 0.5rem;" id="pills-Students-tab" data-toggle="tab" href="#pills-Students"
+								role="tab" aria-controls="pills-Students" aria-selected="true">{{'view.teacher.landing.createMessageTab' | translate }}</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" style="padding: 0.5rem;" id="pills-Groups-tab" data-toggle="tab" href="#pills-Groups" role="tab"
+								aria-controls="pills-Groups" aria-selected="false">{{'view.teacher.landing.sentMessageTab' | translate }}</a>
+						</li>
+
+					</ul>
+					<div class="tab-content" id="pills-tabGroupsContent">
+						<div class="tab-pane fade show active" id="pills-Students" role="tabpanel"
+							aria-labelledby="pills-Students-tab">
+							<app-group-messaging [role]="'teacher'"></app-group-messaging>
+						</div>
+						<div class="tab-pane fade" id="pills-Groups" role="tabpanel" aria-labelledby="pills-Groups-tab">
+							<app-group-messages-sent [role]="'teacher'" [teacherSchoolId]="this.schoolId"></app-group-messages-sent>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>

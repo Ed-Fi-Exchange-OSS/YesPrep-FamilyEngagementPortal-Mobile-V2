@@ -1,0 +1,49 @@
+<main role="main" [ngClass]="containerStyle()">
+    <form #alertForm="ngForm" (ngSubmit)="save(model)">
+        <div class="card">
+            <div class="card-body">
+                <h2>{{'General Alerts'  | translate}}</h2>
+                <div class="alert alert-info ng-binding">
+                    <i class="ion-md-information-circle f-s-20"></i>
+                    {{'General Alerts Info' | translate}}
+                </div>
+                <hr />
+                <h3 class="m-0">{{'Detail Alerts'  | translate}}</h3>
+                <div class="table-responsive">
+                    <table class="table table-xs table-striped">
+                        <thead>
+                            <tr>
+                                <th>{{'Alert'  | translate}}</th>
+                                <th>{{'Threshold'  | translate}}</th>
+                                <th>{{'Enable'  | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let a of model.alerts; let i = index;">
+                                <td class="align-middle">{{a.description | translate}}</td>
+                                <td>
+                                    <ul class="list-unstyled">
+                                        <li *ngFor="let t of a.thresholds" class="d-flex w-75">{{t.thresholdValue}} </li>
+                                    </ul>
+                                </td>
+                                <td class="align-middle">
+                                    <switch [id]="i" [label]="a.description" [model]="a.enabled" (OnModelChange)="modelChange(a.alertTypeId,$event)"></switch>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row p-b-50">
+            <div class="col">
+                <button class="btn float-right" type="submit"
+                    [ngClass]="{'btn-danger': alertForm.invalid, 'btn-success':resolvingPromise, 'btn-info': alertForm.valid && !resolvingPromise}"
+                    placement="bottom" ngbTooltip="{{(alertForm.invalid ? 'Invalid Form' : 'Ready to Save') | translate}}" triggers="click:blur">
+                    <i class="ion"
+                        [ngClass]="{'ion-md-checkmark-circle': alertForm.valid, 'ion-md-close-circle': alertForm.invalid, 'ion-md-refresh-circle':resolvingPromise}"></i>
+                    <span>{{'Save'|translate}}</span></button>
+            </div>
+        </div>
+    </form>
+</main>

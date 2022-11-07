@@ -1,0 +1,61 @@
+<div class="card">
+    <div class="card-body">
+        <div *ngIf="model != null">
+            <h3 class="m-b-15" [ngClass]="'text-' + color">{{model.title}} <span>{{model.shortDescription}}</span></h3>
+            <div *ngIf="model.subSections.length > 2">
+                <div class="col-12 p-0">
+                    <ng-container *ngFor="let ss of model.subSections; last as $last" style="max-width: 45px;">
+                        <div class="flex-fill">
+                            <p class="m-t-15 m-b-15 f-s-15">
+                                {{ replaceName(ss.title, ss.administrationDate) | translate}} 
+                                
+                            </p>
+                            <p class="m-t-15 m-b-15 f-s-15">{{ss.score == 0 ? '-' : ss.score }}</p>
+                            <p class="m-t-15 m-b-15 f-s-15">
+                                <label
+                                    class="f-s-14 f-w-500 m-b-0" *ngIf="ss.performanceLevelMet" placement="bottom"
+                                    ngbTooltip="{{('view.studentAssesment.performanceLevel.' + ss.performanceLevelMet) | translate}}"
+                                    triggers="click:blur">
+                                    {{ss.performanceLevelMet | translate}}
+                                </label> </p>
+                        </div>
+                        <hr class="m-t-0 m-b-0" />
+                    </ng-container>
+                </div>
+
+            </div>
+            <div *ngIf="model.subSections.length <= 2">
+                <div class="d-flex justify-content-between text-center col-12 p-0">
+                    <ng-container *ngFor="let ss of model.subSections; last as $last" style="max-width: 45px;">
+                        <div class="flex-fill" [ngClass]="{'border-right-1':!$last }">
+                            <p class="m-b-10 m-t-10 f-s-15">{{ss.title}}</p>
+                            <p class="m-b-10 m-t-10 f-s-15">{{ss.score == 0 ? '-' : ss.score }}</p>
+                            <p class="f-s-14 f-w-500" *ngIf="ss.performanceLevelMet"
+                                [ngClass]="{'font-weight-bold':ss.performanceLevelMet == 'Did Not Meet Grade Level' || ss.performanceLevelMet == 'Approaches Grade Level'}"
+                                placement="bottom"
+                                ngbTooltip="{{('view.studentAssesment.performanceLevel.' + ss.performanceLevelMet) | translate}}"
+                                triggers="click:blur">
+                                {{ss.performanceLevelMet | translate}}</p>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+
+            <div *ngIf="assessment != 0" class="progress m-t-15 h-10px">
+                <div class="progress-bar progress-bar-animated" [ngClass]="'bg-'+color" role="progressbar"
+                    [ngStyle]=" {'width':model.totalScore*100/model.maxRawScore }" aria-valuenow="{model.totalScore}"
+                    aria-valuemin="1" aria-valuemax="model.maxRawScore">
+                </div>
+            </div>
+            <h4 *ngIf="assessment != 0" class="m-t-10">{{'view.studentAssesment.totalScore' | translate}}: <span
+                    class="pull-right">{{model.totalScore}}</span></h4>
+        </div>
+        <div class="d-flex justify-content-end p-r-10"> <a href="#"
+                (click)="externalUrl(model.externalLink)">{{'Click Me' | translate}}</a> </div>
+    </div>
+    <div *ngIf="model == null">
+        <div class="d-flex justify-content-center">
+            <i class="ion-ios-refresh f-s-50 animation-rotate" style="color: #03a9f4"></i>
+        </div>
+    </div>
+</div>

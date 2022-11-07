@@ -1,0 +1,19 @@
+<div class="row"> <h6 class="h6">Students: {{students.length}}</h6></div>
+<div class="hr"><hr/></div>
+<div *ngFor="let item of students">
+    <div class="row"> 
+        <div class="col-2 image-container img-avatar " style="width: 50px; height: 50px;"><img [src]="item?.imageUrl" /> </div>
+        <div class="col-6 text-center"><small>{{item?.firstName}} {{item?.lastSurname}} <br/> {{item?.gradeLevel}}</small></div>
+        <div class="col-2 " ngbTooltip="Student details" triggers="click:blur" > 
+            <a [routerLink]="['/layout/studentdetail', item?.studentUsi]" >
+                <i class="ion ion-md-information-circle text-info mt-2"  style="zoom:2.0;" aria-hidden="true"></i> 											
+            </a>
+        </div>
+        <div class="col-2"ngbTooltip="Messages" triggers="click:blur"> 
+          <a  [routerLink]="['/layout/communications/contacts', item?.studentUsi]">
+            <i class="ion ion-md-mail text-info m-2"    style="zoom:2.0;" aria-hidden="true"></i> </a></div>
+        </div>
+    <div class="hr"><hr/></div>
+</div>
+
+

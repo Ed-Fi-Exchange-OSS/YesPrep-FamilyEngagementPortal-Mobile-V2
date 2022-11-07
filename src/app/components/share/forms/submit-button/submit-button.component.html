@@ -1,0 +1,8 @@
+<button class="btn" 
+        [disabled]="form.valid" 
+        (click)="executePromise()" 
+        [ngClass]="{'btn-danger': form.invalid, 'btn-success':resolvingPromise, 'btn-info': form.valid && !resolvingPromise}"
+        placement="bottom" ngbTooltip="{{(form.invalid? 'Invalid Form' : 'Ready to Save') | translate}}"
+        triggers="click:blur"
+        >
+    <i class="ion" [ngClass]="{'ion-md-checkmark-circle': form.valid, 'ion-md-close-circle': form.invalid, 'ion-md-refresh-circle':resolvingPromise}"></i> <span>{{label | translate}}</span></button>

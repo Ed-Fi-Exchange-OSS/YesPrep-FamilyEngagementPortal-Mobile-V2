@@ -1,0 +1,69 @@
+<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+    <form class="ng-pristine ng-valid">
+        <div class="form-group">
+          <label for="searchName">{{'Search by Student or Families Name'  | translate}}</label>
+          <input type="text" class="form-control" id="searchName" [(ngModel)]="searchName" name="searchName"/>
+        </div>
+        <div class="row">
+            <div class="col-12">
+              <div class="form-group ">
+                  <label for="gradeId" class="select-label">{{'formLabels.gradeLevel'  | translate}}</label>	
+                  <div class="select-button-container">	
+                    <div class="select-container">			  
+                        <select id="gradeId" name="gradeId"
+                            class="form-control select-grade"  [(ngModel)]="gradeId" (change)="onChangeGrade()">									 
+                            <option [(ngValue)]="item.id"
+                                *ngFor="let item of grades"> {{item.name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="searchbtn-container">
+                        <div class="input-group-append p-10 f-s-18 d-flex  btn btn-fill-search " (click)="getTeacherStudents()">
+                            <span>{{'Search' | translate }}</span><i class="ion ion-md-search"></i>
+                        </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+        </div>  
+        <div *ngIf="students.length  > 0">
+            <h6 class="h6 mt-2 mb-2">Family Members: {{students.length}} (sorted by student name)</h6>
+            <app-individual-messages-students-list [students]="students" (parentsUsis)="updateRecipientsUSI($event)"></app-individual-messages-students-list>
+        </div>
+        <div class="row">
+            <div class="form-group col-12 mt-1">
+                <label for="subject">{{'formLabels.subject'  | translate}} </label>
+                <input type="text" class="form-control" id="subject" name="subject" [(ngModel)]="subject" />
+            </div>
+    
+            <div class="form-group col-12">
+                <label for="message">{{'formLabels.message'  | translate}} </label>
+                <textarea rows="6" type="text" class="form-control" id="message" name="message" maxlength="255"
+                    [(ngModel)]="message"></textarea>
+            </div>
+            <div class="col">
+                <button form="messageForm"
+                    *ngIf="parentsUsisArray?.length  > 1"
+                    class="float-right btn btn-fill-search" (click)="sendGroupMessage()"
+                    >
+                    {{'Send to people'| translate: {'count': parentsUsisArray?.length  } }}
+                </button>
+                <button form="messageForm"
+                    *ngIf="!parentsUsisArray || parentsUsisArray?.length  == 0"
+                    class="float-right btn btn-secondary" [disabled]="true"
+                    >
+                    {{'Send to people'| translate: {'count': 0  } }}
+                </button>
+                <button form="messageForm" *ngIf="parentsUsisArray?.length  == 1" class="float-right btn btn-fill-search"
+                    (click)="sendGroupMessage()">
+                    {{'Send to one person'| translate }}
+                </button>
+            </div>
+        </div>
+        
+
+    </form>
+
+    
+
+</div>

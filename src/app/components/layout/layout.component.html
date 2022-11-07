@@ -1,0 +1,11 @@
+<nav-bar *ngIf="!openWizard"></nav-bar>
+<div [ngClass]="containerStyle()" >
+  <div *ngIf="!openWizard">
+    <div class="col text-center" *ngIf="isSessionExpired">
+      <h1>{{sessionExpiredLabel}}.</h1>
+      <button class="btn btn-primary w-100" (click)="clearSession()">{{'Click to Login' | translate}}</button>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+  <wizard *ngIf="openWizard" (onFinishWizard)="openWizard = $event"></wizard>
+</div>

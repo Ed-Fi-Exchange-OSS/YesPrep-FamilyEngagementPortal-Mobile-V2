@@ -1,0 +1,34 @@
+.list-group-item{
+    padding: 5px 20px;
+}
+.list-group-item:hover{
+    background: #f1f1f1;
+}
+.user-img img{
+    height: 70px;
+    width: 70px;
+}
+.card-header h4{
+    display: inline-block;
+    padding: 12px 15px 8px 15px;
+}
+.card-header ul{
+    list-style: none;
+}
+.card-header ul li a{
+    font-size: 25px;
+    padding: 15px 10px 9px;
+    outline: none;
+}
+.search-div{
+    display: none;
+}
+.user-detail{
+    font-size: 14px;
+}
+
+.group-header {
+    font-weight: bold;
+    font-size: 20px;
+    color: black;
+}

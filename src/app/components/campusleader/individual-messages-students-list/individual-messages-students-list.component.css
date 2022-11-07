@@ -1,0 +1,49 @@
+.students-list-container {
+  max-height: 250px;
+  overflow: scroll;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+}
+
+.students-table {
+  width: 100%;
+}
+
+.matColumnDef-parentName,
+.mat-header-cell,
+.mat-cell {
+  padding-left: 10px;
+  border-right: 1px solid #ced4da !important;
+  border-left: 1px solid #ced4da !important;
+  color: #678098;
+  /* border-top:none;
+  border-bottom:none; */
+}
+.matColumnDef-student,
+.matCellDef-student {
+  padding-left: 10px;
+}
+.demo-row-is-clicked {
+  font-weight: bold;
+  background-color: #91bffa;
+}
+.demo-row-is-clicked .mat-cell {
+  color: #fff;
+}
+.mat-header-cell {
+  font-size: 0.9em !important;
+  color: #678098;
+}
+.mat-column-parentRelation {
+  text-align: center;
+}
+.mat-column-gradeLevel {
+  text-align: right;
+}
+.recipients-list {
+  font-size: 1.2rem;
+  padding-right: 10px;
+  margin-bottom: 5px;
+}

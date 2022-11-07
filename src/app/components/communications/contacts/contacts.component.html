@@ -1,0 +1,76 @@
+<main role="main" [ngClass]="containerStyle()">
+        <div class="card">
+            <div class="card-body">
+                <div class="row flex-nowrap overflow-hidden chat-row-container"
+                    [ngClass]="{'justify-content-end': model.selectedRecipient}">
+                    <div class="chat-search-container col-12 col-sm-12 col-md-12 col-lg-4">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="ion ion-md-search"></i></div>
+                            </div>
+                            <input type="text" name="search" class="form-control" [(ngModel)]="searchValue" (ngModelChange)="search($event)" placeholder="{{'Search' | translate}}">
+                        </div>
+                        <div class="text-center">
+                            <span class="link-text" (click)="expandRecipients()">{{('Expand' | translate)}}</span>
+                            | <span class="link-text" (click)="collapseRecipients()">{{('Collapse' | translate)}}</span>
+                        </div>
+                        <ul class="list-unstyled chat-recipients m-b-0">
+                            <!--Normal Recipients-->
+                            <ng-container *ngFor="let sr of filteredRecipients">
+                                <li class="mb-2 clearfix person d-flex align-items-center position-relative"
+                                    (click)="selectStudentRecipient(sr)" *ngIf="sr.show || showAll">
+                                    <div class="position-relative rounded-circle w-45px h-45px m-r-10">
+                                        <div class="image-container image-container-45 position-relative">
+                                            <div style="text-align: center;  display:table;" class="w-45px h-45px" [ngStyle]="{'background-color': sr.avatar.color }">
+                                                <span style="color: white; display:table-cell;vertical-align:middle; font-size: 20px; font-family: 'Poppins', sans-serif;">{{sr.avatar.name}}</span>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="sr.unreadMessageCount > 0" class="bubble-counter blue">
+                                            {{sr.unreadMessageCount}}</div>
+                                    </div>
+                                    <div>
+                                        <span class="font-weight-bold" [innerHtml]="sr.fullName"></span>
+                                    </div>
+                                    <i *ngIf="!sr.show"
+                                        class="ion ion-md-arrow-dropdown position-absolute right-20 f-s-20"></i>
+                                    <i *ngIf="sr.show"
+                                        class="ion ion-md-arrow-dropup position-absolute right-20 f-s-20"></i>
+                                </li>
+                                <ng-container *ngIf="sr.show">
+                                    <li class="p-l-30 mb-2 clearfix person d-flex align-items-center position-relative"
+                                        *ngFor="let r of sr.recipients"
+                                        [ngClass]="{'active': activeAccordion(r, model) }"
+                                        (click)="selectRecipient(r, sr)">
+                                        <div class="position-relative rounded-circle w-45px h-45px m-r-10">
+                                            <div class="image-container image-container-45 position-relative">
+                                                <div style="text-align: center;  display:table;" class="w-45px h-45px" [ngStyle]="{'background-color': r.avatar.color }">
+                                                    <span style="color: white; display:table-cell;vertical-align:middle; font-size: 20px; font-family: 'Poppins', sans-serif;">{{r.avatar.name}}</span>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="r.unreadMessageCount > 0" class="bubble-counter blue">
+                                                {{r.unreadMessageCount}}</div>
+                                        </div>
+                                        <div>
+                                            <span class="font-weight-bold" [innerHtml]="r.fullName"></span>
+                                            <span *ngFor="let relation of r.relationsToStudent"
+                                                class="d-block f-s-8em">{{relation}}</span>
+                                        </div>
+
+                                    </li>
+                                </ng-container>
+                            </ng-container>
+                        </ul>
+                        <div *ngIf="recipientsLoading"
+                            class="d-flex align-items-center justify-content-center position-relative">
+                            <div class="section-loader">
+                                <svg class="circular" viewBox="25 25 50 50">
+                                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3"
+                                        stroke-miterlimit="10"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>

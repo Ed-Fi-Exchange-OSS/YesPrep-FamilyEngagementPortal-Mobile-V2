@@ -1,0 +1,105 @@
+<!-- <main id="container" role="main" class="container container-0p" style="position: relative !important; height: 450px"> -->
+<main role="main" style="position: relative !important; height: 450px">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 p-l-0 p-r-0">
+        <div class="row m-l-0 m-r-0">
+            <div id="message-history" class="col-12 message-history" #scrollMe>
+                <div class="text-center cursor-pointer d-flex justify-content-center align-items-center"
+                    *ngIf="chatModel && !chatModel.conversation.endOfMessageHistory"><a
+                        class="btn btn-block btn-outline-primary btn-rounded"
+                        (click)="loadMore()">{{'view.communications.loadMore' | translate}}</a>
+                </div>
+                <ul class="m-b-0 list-unstyled">
+                    <ng-container *ngFor="let m of chatModel?.conversation.messages">
+                        <!--<li class="clearfix p-t-10" [ngClass]="{'text-right': alignToRight(m,sender) }">-->
+                        <li class="clearfix p-t-10" [ngClass]="{'text-right': alignToRight(m,sender) }">  
+                            <div class="d-inline-block">
+                                <div class="d-flex flex-row align-items-center"
+                                    [ngClass]="{'justify-content-end': alignToRight(m,sender) }">
+                                    <span class="message-time">{{localTime(m.dateSent) | amCalendar}}</span>
+                                </div>
+                                <div class="message" [ngClass]="{ 'message-sender': alignToRight(m,sender)}" style="line-height: 80%;">
+                                    <!--<p style="margin-bottom: 0px; line-height: normal;"> 
+                                        {{ sender.languageCode == 'en' ? m.englishMessage : (m.translatedMessage == null ? m.englishMessage : m.translatedMessage) }}
+                                    </p>-->
+                                    <p *ngIf="!m.englishMessage.includes('ypparentportalprodstor')" style="margin-bottom: 0px; line-height: normal;"> 
+                                        {{m.translatedMessage == null ? m.englishMessage : m.translatedMessage}}
+                                    </p>
+                                    <div *ngIf="m.englishMessage.includes('ypparentportalprodstor')">
+                                        <!-- only file message -->
+                                        <div *ngIf="m.englishMessage.startsWith('https')">
+                                            <img *ngIf="m.englishMessage.includes('-ypimg-')" (click)="downloadFile(m.englishMessage)" src="{{m.englishMessage}}" style="max-width:70%; height:auto" />
+                                            <span *ngIf="m.englishMessage.includes('-ypdoc-')" style="max-width:70%; height:auto">
+                                                <button class="btn btn-info" (click)="downloadFile(m.englishMessage)" style="border: none; display: flex; flex-direction: column; align-items: flex-end;">
+                                                    <div style="border: none; display: flex; flex-direction: row;">
+                                                        <i class="ion ion ion-md-download" style="align-self: flex-end; margin-bottom: 2px;"></i>
+                                                        Download File 
+                                                    </div>
+                                                    <span style="font-size:1rem; overflow-wrap: break-word; max-width: 90% !important; inline-size: 90% !important;"> {{getFileNameFromUrl(m.englishMessage)}}</span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                        <!-- group message with file attached -->
+                                        <div *ngIf="!m.englishMessage.startsWith('https')">
+
+                                            <img *ngIf="m.englishMessage.includes('-ypimg-')" (click)="downloadFile(m.englishMessage)" src="{{splitMessage(m.englishMessage,2)}}" style="max-width:70%; height:auto" />
+                                            <span *ngIf="m.englishMessage.includes('-ypdoc-')" style="font-size:1rem;">
+                                                <button class="btn btn-info" (click)="downloadFile(m.englishMessage)" style="border: none;">
+                                                    <i class="ion ion ion-md-download"></i>
+                                                    Download File {{splitMessage(m.englishMessage,1)}}
+                                                </button> 
+                                            </span>
+                                            
+                                            <!-- <a href="{{splitMessage(m.englishMessage,1)}}">{{splitMessage(m.englishMessage,1)}}</a> -->
+                                        </div>
+                                    </div>
+                                    <span *ngIf="sender.languageCode != 'en' &&  sender.languageCode != null">{{ sender.languageCode == 'en' ?  m.translatedMessage :  m.englishMessage }}</span>
+                                    
+                                </div>
+                            </div>
+                        </li>
+
+                    </ng-container>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-chat p-t-15" id="footer-chat">
+            <div class="row d-flex chat-text-input">
+                
+                <!-- <div class="image-upload">
+                    <label for="file-input">
+                        <i class="ion ion-md-folder-open" style="visibility: visible"></i>
+                    </label>
+                    <input id="file-input" type="file" name='file-input' accept="image/*"
+                        (change)="uploadImage($event)" />
+                </div> -->
+                <div class="input-group ">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-success" (click)="takePicture()" style="border: none;">
+                            <i class="ion ion ion-md-camera"></i>
+                        </button>
+                        <div class="btn btn-primary image-upload-btn"  style="border: none;">
+                            <label for="file-input">
+                                <i class="ion ion-md-folder-open" style="visibility: visible"></i>
+                            </label>
+                            <input id="file-input" type="file" name='file-input' 
+                                (change)="uploadImage($event)" accept=".doc,.docx,.ppt,.pptx,.xls,.xlsx,application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                                text/plain, application/pdf,application/*, image/*"/>
+                        </div>
+                    </div>
+                    <input id="message" name="message" type="text" class="form-control d-inline"
+                        [hidden]="!model.selectedRecipient" placeholder="{{ 'Type your message here.' | translate}}"
+                        autocomplete="off" [(ngModel)]="model.message" (ngModelChange)="simulTran()" />
+                    <div class="input-group-append">
+                        <button class="btn btn-info" (click)="sendMessage()" style="border: none;">
+                            <i class="ion ion-md-paper-plane"></i></button>
+                    </div>
+                </div>
+                <!-- <label for="message" *ngIf="!model.selectedRecipient">*Please select a recipient.</label>
+                <span *ngIf="sender.languageCode != 'en' && sender.languageCode != null && this.model.selectedRecipient.lenguageCode != 'en' && model.message"
+                    style=" word-wrap: break-word;">
+                    en : {{model.translatedMessage}}</span> -->
+            </div>
+        </div>
+        
+    </div>
+</main>

@@ -1,0 +1,15 @@
+<div class="card h-100 cursor-pointer w-100">
+    <div class="card-body">
+        <div class="text-center m-t-10" *ngIf="!showLoader">
+            <interpretation-icon [model]="interpretation" [fontclass]="'f-s-50 icon-round-border-large'"></interpretation-icon>
+            <h3 class="m-t-6" placement="bottom" ngbTooltip="{{tooltip}}" triggers="click:blur" #t="ngbTooltip" (click)="t.open()" (document:keydown.esc)="t.open()">{{indicatorTitle}}</h3>
+            <span class="m-t-10 f-s-30 font-weight-bold text-dark">{{value}}</span>
+            <p class="f-s-12">{{textualEvaluation | translate}}</p>
+        </div>
+        <div *ngIf="showLoader">
+            <div class="d-flex justify-content-center m-t-105">
+                <i class="ion-ios-refresh f-s-50 animation-rotate" style="color: #03a9f4"></i>
+            </div>
+        </div>
+    </div>
+</div>

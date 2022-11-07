@@ -1,0 +1,12 @@
+<div class="btn-group dropdown">
+    <a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" placement="top">
+        <span class="flag-icon" [ngClass]="'flag-icon-'+ model.currentLang"></span>
+        {{'Language' | translate}}
+    </a>
+    <div [ngClass]="'dropdown-menu dropdown-menu-' + dropDownAlign">
+        <button class="dropdown-item"  type="button" *ngFor="let l of model.languages" (click)="changeLocale(l.id)" [ngClass]="{'active': l.active}" >
+            <span class="flag-icon m-r-10" [ngClass]="'flag-icon-'+ l.flag"></span> 
+            {{l.language}}
+        </button>
+    </div>
+</div>

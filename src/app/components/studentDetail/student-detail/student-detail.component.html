@@ -1,0 +1,260 @@
+<main id="top" role="main" class="p-l-15 p-r-15">
+    <div class="row">
+        <div class="col-lg-6">
+            <h1><span>{{'view.studentDetail.title' | translate}} {{'view.studentDetail.subtitle' | translate}}</span></h1>
+        </div>
+        <div class="col-lg-6 text-right">
+            <div>
+                {{('view.studentDetail.viewingStudent' | translate)}}
+                <a *ngIf="currentPos > 0" [routerLink]="'/layout/studentdetail/' + previousStudent() "><</a>
+                {{currentPos + 1}}
+                 <a *ngIf="currentPos < studentIds.length-1" [routerLink]="'/layout/studentdetail/' +   nextStudent() ">></a>
+                 {{('view.studentDetail.of' | translate) + ' ' + studentIds.length}}
+            </div>
+        </div>
+    </div>
+    <div class="row m-b-20">
+        <div class="col-md-6 col-lg-4 p-20">
+            <student-profile [model]="model"></student-profile>
+        </div>
+        <!-- Indicators -->
+        <div id="indicators" class="col-12 col-md-6 col-lg-4">
+            <div class="row flex-card-grid">
+            <!-- ?  'view.studentDetail.indicators.courseAverage.interpretation.staff.' + ctrl.model.courseGrades.currentGradeAverage.evaluation : 'view.studentDetail.indicators.courseAverage.interpretation.' + ctrl.model.courseGrades.currentGradeAverage.evaluation | translate -->
+                <div class="col-12 col-md-12 col-lg-12">
+                    <indicator2  [showLoader]="model.attendance.absentAttendanceEvents == null"
+                        [indicatorTitle]="'view.studentDetail.indicators.absences.title' | translate"
+                        [tooltip]="'view.studentDetail.indicators.absences.tooltip' | translate"
+                        [value]="model.attendance.yearToDateAbsenceCount"
+                        [interpretation]="model.attendance.absentInterpretation"
+                        [textualEvaluation]="(isTeacher ?'view.studentDetail.indicators.absences.interpretation.staff.' + model.attendance.absentInterpretation : 'view.studentDetail.indicators.absences.interpretation.' + model.attendance.absentInterpretation) | translate"
+                        [bgclass]="'widget-bg-secondary'"
+                        (click)="scrollTo('attendance')"></indicator2>
+                </div>
+                <div class="col-12 col-md-12 col-lg-12">
+                    <indicator2 [showLoader]="model.courseGrades.currentCourses == null"
+                        [indicatorTitle]="'view.studentDetail.indicators.courseAverage.title' | translate"
+                        [tooltip]="'view.studentDetail.indicators.courseAverage.tooltip' | translate"
+                        [value]="model.courseGrades.currentGradeAverage?.gradeAverage | number : '1.0-1'"
+                        [interpretation]="model.courseGrades.currentGradeAverage != null ?  model.courseGrades.currentGradeAverage.evaluation: 0 "
+                        [textualEvaluation]="model.courseGrades.currentGradeAverage != null ? (isTeacher ? 'view.studentDetail.indicators.courseAverage.interpretation.staff.' + model.courseGrades.currentGradeAverage?.evaluation : 'view.studentDetail.indicators.courseAverage.interpretation.' + model.courseGrades.currentGradeAverage?.evaluation): '' "
+                        [bgclass]="'widget-bg-secondary'"
+                        (click)="scrollTo('grades')"></indicator2>
+                </div>
+            </div>
+        </div>
+        <div id="indicators" class="col-12 col-md-12 col-lg-4">
+            <div class="row flex-card-grid">
+                <div class="col-12 col-md-6 col-lg-12">
+                    <indicator2 [showLoader]="model.behavior.disciplineIncidents.length == 0"
+                        [indicatorTitle]="'view.studentDetail.indicators.behavior.title' | translate"
+                        [tooltip]="'view.studentDetail.indicators.behavior.tooltip' | translate"
+                        [value]="model.behavior.yearToDateDisciplineIncidentCount"
+                        [interpretation]="model.behavior.interpretation"
+                        [textualEvaluation]="'view.studentDetail.indicators.behavior.interpretation.' + model.behavior.interpretation | translate : { 'incidentCount': model.behavior.yearToDateDisciplineIncidentCount}"
+                        [bgclass]="'widget-bg-secondary'"
+                        *ngIf="this.studentAbc.behavior"
+                        (click)="scrollTo('behaviour-log')"></indicator2>
+                        <div *ngIf="!this.studentAbc.behavior">
+                            <div class="card h-100 w-100">
+                                <div class="card-body">
+                                    <div class="text-center m-t-100" >
+                                        <h3 class="m-t-6" placement="bottom" ngbTooltip="{{'view.studentDetail.indicators.behavior.tooltip' | translate}}" triggers="click:blur" #t="ngbTooltip" (click)="t.open()" (document:keydown.esc)="t.open()">{{'view.studentDetail.indicators.behavior.title' | translate}}</h3>
+                                        <p *ngIf="!isTeacher" class="f-s-12">{{'view.disciplineIncidents.moreDetail' | translate}}</p>
+                                        <p *ngIf="isTeacher"  class="f-s-12">{{'view.disciplineIncidents.moreDetail.staff' | translate}}</p>
+                                        <a  *ngIf="!isTeacher" style="font-size: 20px" class="cursor-pointer" (click)="externalUrl(model.behavior.externalLink.url+'?source=YP&sid='+model.studentUniqueId+'&pid='+parentUniqueId)">Hero.</a>
+                                        <a  *ngIf="isTeacher" style="font-size: 20px" class="cursor-pointer" (click)="externalUrl('https://access.heropowered.com/school/login')">Hero.</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-12">
+                    <indicator2  [showLoader]="model.missingAssignments.interpretation == null"
+                        [indicatorTitle]="'view.studentDetail.indicators.missingAssignments.title' | translate"
+                        [tooltip]="'view.studentDetail.indicators.missingAssignments.tooltip' | translate"
+                        [value]="model.behavior.missingAssignments == undefined? 0 : model.behavior.missingAssignments.missingAssignmentCount"
+                        [interpretation]="model.missingAssignments.interpretation"
+                        [textualEvaluation]="(isTeacher ? 'view.studentDetail.indicators.missingAssignments.interpretation.staff.' + model.missingAssignments.interpretation : 'view.studentDetail.indicators.missingAssignments.interpretation.' + model.missingAssignments.interpretation) | translate"
+                        [bgclass]="'widget-bg-secondary'"
+                        (click)="scrollTo('missing-assignments')"></indicator2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attendance Log -->
+    <div id="attendance" class="row" *ngIf="model.attendance.absentAttendanceEvents?.length > 0">
+        <div class="col-lg-12">
+            <student-attendance [model]="model.attendance" [showAll]="showAbsences"></student-attendance>
+        </div>
+    </div>
+
+
+    <!-- Behavior Log -->
+    <div id="behaviour-log" class="row" *ngIf="this.studentAbc.behavior">
+        <div class="col-lg-12" *ngIf="model.behavior.disciplineIncidents?.length > 0">
+            <discipline-incidents  [model]="model.behavior" [studentUsi]="model.studentUsi"></discipline-incidents>
+        </div>
+    </div>
+
+    <!-- Course Grades / Transcript -->
+    <div id="grades" class="row" *ngIf="model.courseGrades.currentCourses?.length > 0">
+        <div class="col-lg-12">
+            <current-grades [model]="model.courseGrades" [studentUsi]="model.studentUsi" [isTeacher]="isTeacher"></current-grades>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h3>{{'GPA'  | translate}} <span>{{'Grading Scale' | translate}}</span></h3>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">{{'Number Grade'  | translate}}</th>
+                                    <th class="text-center">{{'Letter Grade'  | translate}}</th>
+                                    <th class="text-center">{{'Grade Points'  | translate}} <br/>
+                                        <!-- <label class="m-t-0 m-b-0 f-s-10" >{{'Grade Points Parenthesis' | translate}}</label> -->
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-right" style="white-space:nowrap;">100 - 97</td>
+                                    <td class="text-right">A+</td>
+                                    <td class="text-right" >4.33</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right" >96-93</td>
+                                    <td class="text-right">A</td>
+                                    <td class="text-right" >4</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right" >92-90</td>
+                                    <td class="text-right">A-</td>
+                                    <td class="text-right" >3.67</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right" >89-87</td>
+                                    <td class="text-right">B+</td>
+                                    <td class="text-right" >3.33</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right" >86-83</td>
+                                    <td class="text-right">B</td>
+                                    <td class="text-right" >3</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right" >82-80</td>
+                                    <td class="text-right">B-</td>
+                                    <td class="text-right" >2.67</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right" >79-77</td>
+                                    <td class="text-right">C+</td>
+                                    <td class="text-right" >2.33</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right" >76-73</td>
+                                    <td class="text-right">C</td>
+                                    <td class="text-right" >2</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right" >72-70</td>
+                                    <td class="text-right">C-</td>
+                                    <td class="text-right" >1.67</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right" >69 {{'Below' | translate}}</td>
+                                    <td class="text-right">F</td>
+                                    <td class="text-right" >0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+     <div id="missing-assignments" class="row" *ngIf="model.missingAssignments.missingAssignmentCount > 0">
+        <div class="col-lg-12">
+            <missing-assigments  [model]="model.missingAssignments" [customParams]="customParams.assignments" [studentUsi]="model.studentUsi"  ></missing-assigments>
+        </div>
+    </div>
+    <div id="schedule" class="row">
+        <div class="col-lg-12">
+            <student-calendar [studentId]="model.studentUsi"></student-calendar>
+        </div>
+    </div>
+
+    <div id="success-team" class="row">
+        <div class="col-lg-12">
+            <student-success-team [data]="model"></student-success-team>
+        </div>
+    </div>
+    <div id="college-corner" class="row" *ngIf="model.courseGrades.gpa?.gpa && model.assessment?.assessments[0].maxRawScore > 0 && model.assessment?.assessments[1].maxRawScore > 0 && model.assessment?.assessments[2].maxRawScore > 0">
+        <div class="col-lg-12">
+            <h2>{{'College Initiative Corner' | translate }}</h2>
+        </div>
+    </div>
+    <div class="row m-b-30" *ngIf="model.courseGrades.gpa?.gpa">
+        <div class="col-lg-4 m-b-20">
+            <indicator [showLoader]="model.courseGrades.gpa == null"
+                       [indicatorTitle]="'view.studentDetail.indicators.gpa.title' | translate"
+                       [tooltip]="'view.studentDetail.indicators.gpa.tooltip' | translate"
+                       [value]="model.courseGrades.gpa?.gpa ? model.courseGrades.gpa?.gpa.toFixed(1) : '-'"
+                       [textualEvaluation]="'view.studentDetail.indicators.gpa.interpretation.' + model.courseGrades.gpa?.interpretation | translate:{'nationalGPA':model.courseGrades.gpa?.nationalAverageGPA}"
+                       [bgclass]="'widget-bg-clear'"></indicator>
+        </div>
+        <div class="col-lg-8">
+            <indicator [indicatorTitle]="'view.studentDetail.indicators.onTrackToGraduate.title' | translate"
+                       [tooltip]="'view.studentDetail.indicators.onTrackToGraduate.tooltip' | translate"
+                       [value]=""
+                       [textualEvaluation]="'OnTrackMessage' | translate"
+                       [bgclass]="'widget-bg-clear'"></indicator>
+        </div>
+    </div>
+    <div class="alert alert-info" *ngIf="model.courseGrades.gpa?.gpa && model.assessment?.assessments[0].maxRawScore > 0 && model.assessment?.assessments[1].maxRawScore > 0 && model.assessment?.assessments[2].maxRawScore > 0"><i class="ion-md-information-circle f-s-20"></i> {{'Assesment Disclaimer' | translate}}</div>
+    
+    <div id="assesments" class="row" *ngIf="showStaarAssessmentHistory" >
+        <div class="col-lg-12">
+            <student-staar-assessment [model]="model.staarAssessmentHistory" ></student-staar-assessment>
+        </div>
+    </div>
+
+    
+     <div id="assesments" class="row" *ngIf="model.assessment?.assessments[0].maxRawScore > 0">
+        <div class="col-lg-12">
+            <student-assessment [model]="model.assessment != null ? model.assessment?.assessments[0] : null" [studentUsi]="model.studentUsi" [assessment]="0" [color]="'info'"></student-assessment>
+        </div>
+    </div> 
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <h3 class="m-t-15" tooltip-placement="bottom" uib-tooltip="State Assessments">State Assessments</h3>
+                        <p class="m-t-10" style="font-size:15px" *ngIf="isTeacher">For more detailed information about this student's STAAR scores, please visit</p>
+                        <p class="m-t-10" style="font-size:15px" *ngIf="!isTeacher">For more detailed information about your student's STAAR scores, please visit</p>
+                        <a  style="font-size: 20px" class="cursor-pointer" (click)="externalUrl('https://www.texasassessment.gov/families.html')">TexasAssessment.gov</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="model.assessment?.assessments[1].maxRawScore > 0 || model.assessment?.assessments[2].maxRawScore > 0">
+        <div class="col-lg-6">
+            <student-assessment [model]="model.assessment != null ? model.assessment?.assessments[1] : null" [studentUsi]="model.studentUsi" [assessment]="1" [color]="'primary'"></student-assessment>
+        </div>
+        <div class="col-lg-6">
+            <student-assessment [model]="model.assessment != null ? model.assessment?.assessments[2] : null" [studentUsi]="model.studentUsi" [assessment]="2" [color]="'success'"></student-assessment>
+        </div>
+    </div>
+    <div *ngIf="isShowUpButton" class="top-button cursor-pointer" (click)="scrollUp()">
+        <i class="icon ion-md-arrow-round-up"></i>
+    </div>
+</main>

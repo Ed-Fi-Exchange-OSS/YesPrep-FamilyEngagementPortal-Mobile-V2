@@ -1,0 +1,7 @@
+<!-- <label for="sw{{id}}" class="switch">
+    <input id="sw{{id}}" type="checkbox" [(ngModel)]="model" (change)="onSwitch()">
+    <span class="slider round"></span>
+    <span class="visibly-hidden">{{label}}</span>
+</label> -->
+
+<mat-slide-toggle color="primary" id="sw{{id}}" [(ngModel)]="model" (change)="onSwitch()" ></mat-slide-toggle>

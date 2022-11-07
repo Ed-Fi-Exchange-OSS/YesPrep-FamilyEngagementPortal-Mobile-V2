@@ -1,0 +1,35 @@
+# Mac
+.DS_Store
+
+# Node
+npm-debug.log
+/node_modules
+
+# Cordova
+/platforms
+/plugins
+
+# res
+resources/signing
+jsconfig.json
+.vscode/
+typings/
+keys/
+deploy_files/
+
+#Angular
+/dist
+/tmp
+/out-tsc
+/www
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# NPM
+package-lock.json

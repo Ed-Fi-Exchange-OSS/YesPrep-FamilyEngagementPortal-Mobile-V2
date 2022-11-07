@@ -1,0 +1,24 @@
+<a class="btn btn-outline-notifications" (click)="openScrollableContent(alertsModal)">
+  <i class="ion ion-md-notifications-outline"></i>
+  <div *ngIf="model.alerts.length > 0" class="bubble-counter orange">{{model.alerts.length}}</div>
+</a>
+
+<ng-template #alertsModal let-modal>
+  <div class="d-flex">
+    <a class="position-relative rounded-circle w-40px h-40px btn btn-fill-help return-modal"
+      (click)="modal.close('Close click'); readAlerts();">
+      <i class="material-icons">keyboard_backspace</i>
+    </a>
+    <h2 class="modal-title language-title-pt-pl">{{title}}</h2>
+
+  </div>
+  <div class="modal-body">
+    <div>
+      <h3 *ngIf="alerts.length == 0">{{'Empty Alerts' | translate}}</h3>
+      <div class="notification-item" *ngFor="let alert of alerts" (click)="readAlerts()">
+        <h3 class="mt-2">{{alert.title}}</h3>
+        {{alert.value | translate}}
+      </div>
+    </div>
+  </div>
+</ng-template>

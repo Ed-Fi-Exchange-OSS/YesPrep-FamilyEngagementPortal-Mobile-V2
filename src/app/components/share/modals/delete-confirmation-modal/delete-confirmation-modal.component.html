@@ -1,0 +1,29 @@
+<button class="btn btn-danger float-right  mg-l3" (click)="delete(index)"><span class="visibly-hidden">Delete
+        Email
+        Row</span><i class="icon ion-md-trash" aria-hidden="true"></i></button>
+
+<!--        <button class="btn btn-danger float-right  mg-l3" (click)="openModal(confirmDelete)"><span class="visibly-hidden">Delete
+            Email
+            Row</span><i class="icon ion-md-trash" aria-hidden="true"></i></button>-->
+
+
+<ng-template #confirmDelete let-modal>
+    <div class="d-flex justify-content-center">
+
+        <h2 class="modal-title mg-t15">{{'Confirm delete' | translate}}?</h2>
+
+    </div>
+    <div class="modal-body">
+        <div id="button-1" class="row">
+            <div class="col-6 col-md-6 m-b-10 mx-auto">
+                <button type="button" class="confirmbutton-yes btn btn-sm btn-danger m-r-10 float-right"
+                    (click)="delete(index); modal.close('Close click')">{{'Yes' | translate}}</button>
+            </div>
+            <div class="col-6 col-md-6 m-b-10 mx-auto">
+                <button type="button" class="confirmbutton-no btn btn-sm"
+                    (click)="modal.close('Close click')">{{'No'| translate}}</button>
+            </div>
+        </div>
+    </div>
+
+</ng-template>

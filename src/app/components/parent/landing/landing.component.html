@@ -1,0 +1,16 @@
+<main role="main">
+    <h1 class="m-b-10 p-l-15"><span>{{'view.landing.subtitle' | translate}}</span></h1>
+    <div class="col">
+        <div class="alert alert-info ng-binding text-center" *ngIf="newVersion">
+            <h2>{{'New App Title' | translate}}</h2>
+            {{'New App Description' | translate}}
+            <button class="btn btn-primary w-100 m-t-10" (click)="redirectToStore()">{{'Update' | translate}}</button>
+        </div>
+    </div>
+
+    <div>
+        <div class="col student-card-width" *ngFor="let s of student">
+            <student-card [studentObj]="s" [customParams]="params"></student-card>
+        </div>
+    </div>
+</main>

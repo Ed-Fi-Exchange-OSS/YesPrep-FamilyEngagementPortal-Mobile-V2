@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "459661466842",
+    "firebase_url": "https://familyengagement-427c5.firebaseio.com",
+    "project_id": "familyengagement-427c5",
+    "storage_bucket": "familyengagement-427c5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:459661466842:android:59f66d74a38bbac2ee59e3",
+        "android_client_info": {
+          "package_name": "org.student1.familyengagementapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "459661466842-5ccbqfiqcfflba6ioo7ndhrfd5ns3m3p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgUcBLDwB0E4btsGmwJETIcPKwVBZoeWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "459661466842-5ccbqfiqcfflba6ioo7ndhrfd5ns3m3p.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "459661466842-oic2ja4c4s5e0rp3fsvkedn15l5ooeeg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.yesprep.familyportalapp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:459661466842:android:7d169ad48958c4f8ee59e3",
+        "android_client_info": {
+          "package_name": "org.yesprep.familyengagementapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "459661466842-5ccbqfiqcfflba6ioo7ndhrfd5ns3m3p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgUcBLDwB0E4btsGmwJETIcPKwVBZoeWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "459661466842-5ccbqfiqcfflba6ioo7ndhrfd5ns3m3p.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "459661466842-oic2ja4c4s5e0rp3fsvkedn15l5ooeeg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.yesprep.familyportalapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,99 @@
+<div class="tab-content" id="pills-tabGroupsContent">
+    <div class="tab-pane fade show active" id="pills-Students" role="tabpanel" aria-labelledby="pills-Students-tab">
+        <h3>{{'view.teacher.createMessagesTitle'| translate }}</h3>
+        <div class="col-12">
+            <div *ngIf="role == 'teacher'"  class="form-group">
+                <label for="section"> {{'formLabels.section'  | translate}} </label>
+                <select id="sectionId"  (change)="onChangeSection()" name="sectionId" class="form-control"
+										[(ngModel)]="CourseTitle">
+                    <option value="All Sections" [selected]="true">All Sections</option>
+                    <option [(ngValue)]="item.courseTitle" *ngFor="let item of model">
+                        {{item.localCourseCode}} {{item.courseTitle}} {{ item.classPeriodName}}
+                    </option>
+                </select>
+            </div>
+            
+            <div *ngIf="role == 'admin'" class="form-group">
+                
+                
+                <label for="gradeId">{{'formLabels.gradeLevel'  | translate}}</label>					  
+                <select id="gradeId" name="gradeId"
+                    class="form-control"  [(ngModel)]="GradeId" (change)="onChangeGrade()">									 
+                    <option [(ngValue)]="item.id"
+                        *ngFor="let item of gradeLevels"> {{item.name}}
+                    </option>
+                </select>
+            </div>
+            <div *ngIf="role == 'admin'" class="form-group">
+                <label for="programId"> {{'formLabels.program'  | translate}} </label>					  
+                <select id="programId" name="programId"  (change)="onProgramChange()"
+                    class="form-control"  [(ngModel)]="selectedProgramId">									 
+                    <option [(ngValue)]="item.id"
+                        *ngFor="let item of programs"> {{item.name}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div *ngIf="role == 'teacher' && familyCount && familyCount.familyMembersCount >= 0" class="col-12">{{'Quick Messaging Note' | translate }} 
+            <b class="material-500-light-blue"> {{familyCount.familyMembersCount}} </b> 
+            <p class="d-inline" *ngIf="familyCount.familyMembersCount > 1"> {{'Quick Messaging Note 2' | translate }}  </p>
+            <p class="d-inline" *ngIf="familyCount.familyMembersCount == 1"> {{'Quick Messaging Note 2 singular' | translate }}  </p>
+            <b class="material-500-light-blue">{{familyCount.studentsCount}}</b> 
+            {{familyCount.studentsCount == 1 ? 'student' : 'students'}} {{'Quick Messaging Note 5' | translate }} 
+            <b class="material-500-light-blue">{{CourseTitle}}</b>. 
+            <br>{{'Quick Messaging Note 4' | translate }}
+        </div>
+
+        <div *ngIf="role == 'admin' && familyCount && familyCount.familyMembersCount >= 0" class="col-12">
+            {{'Audience Message part 1' | translate}} 
+            <b class="material-500-light-blue">{{familyCount.familyMembersCount}} </b> 
+            <p class="d-inline" *ngIf="familyCount.familyMembersCount > 1">{{'Audience Message part 2' | translate}} </p>
+            <p class="d-inline" *ngIf="familyCount.familyMembersCount == 1">{{'Audience Message part 2 singular' | translate}} </p>
+            <b class="material-500-light-blue">{{familyCount.studentsCount}} </b>
+            <p class="d-inline" *ngIf="familyCount.studentsCount > 1"> {{'students at' | translate}} </p>
+            <p class="d-inline" *ngIf="familyCount.studentsCount == 1"> {{'student at' | translate}} </p>
+            {{familyCount.campusName}} {{'in' | translate}}
+            <b class="material-500-light-blue">{{selectedGradeName}}</b> {{'and' | translate}} 
+            <b class="material-500-light-blue">{{selectedProgramName}}</b>.
+        </div>
+
+        <div *ngIf="familyCount && familyCount.familyMembersCount == 0" class="col-12">
+            <p>{{'Nodata' | translate}} </p>
+        </div>
+
+        <div class="row">
+            <br>
+        </div>
+        <div class="form-group col-12">
+            <label for="subject">{{'formLabels.subject'  | translate}} </label>
+            <input type="text" class="form-control" id="subject" name="subject" [(ngModel)]="subject" />
+        </div>
+
+        <div class="form-group col-12">
+            <label for="message">{{'formLabels.message'  | translate}} </label>
+            <textarea rows="6" type="text" class="form-control" id="message" name="message" maxlength="255"
+                [(ngModel)]="message"></textarea>
+        </div>
+        
+        <div *ngIf="familyCount && familyCount.familyMembersCount >= 0" class="row m-t-5">
+            <div class="col align-self-end">
+                <button form="messageForm"
+                    *ngIf="familyCount.familyMembersCount > 1"
+                    class="float-right btn btn-fill-search" (click)="sendGroupMessage()"
+                    >
+                    {{'Send to people'| translate: {'count': familyCount.familyMembersCount } }}
+                </button>
+                <button form="messageForm"
+                    *ngIf="familyCount.familyMembersCount == 0"
+                    class="float-right btn btn-secondary" [disabled]="true"
+                    >
+                    {{'Send to people'| translate: {'count': familyCount.familyMembersCount } }}
+                </button>
+                <button form="messageForm" *ngIf="familyCount.familyMembersCount == 1" class="float-right btn btn-fill-search"
+                    (click)="sendGroupMessage()">
+                    {{'Send to one person'| translate }}
+                </button>
+            </div>
+        </div>
+    </div>

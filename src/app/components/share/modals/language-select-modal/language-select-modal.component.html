@@ -1,0 +1,29 @@
+<div class="d-flex justify-content-between">
+  <a class="position-relative rounded-circle w-40px h-40px btn btn-fill-help"
+    (click)="openScrollableContent(languageModal)">
+    <i class="material-icons">
+      translate
+    </i>
+  </a>
+
+</div>
+
+<ng-template #languageModal let-modal>
+  <div class="d-flex">
+    <a class="position-relative rounded-circle w-40px h-40px btn btn-fill-help return-modal"
+      (click)="modal.close('Close click')">
+      <i class="material-icons">keyboard_backspace</i>
+    </a>
+    <h2 class="modal-title language-title-pt-pl">{{title}}</h2>
+
+  </div>
+  <div class="modal-body" [ngClass]="modalStyle()">
+    <div class="list-group">
+      <a *ngFor="let item of languages" class="list-group-item list-group-item-action"
+        [ngClass]="codeSelected == item.code ? 'active' : '' "
+        (click)="modal.close('Close click'); SelectLanguage(item)">
+        {{item.nativeName + ' - ' + item.name}}
+      </a>
+    </div>
+  </div>
+</ng-template>

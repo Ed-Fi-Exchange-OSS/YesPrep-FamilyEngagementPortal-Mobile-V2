@@ -1,0 +1,29 @@
+<div class="card">
+    <div class="card-body">
+        <h3>{{'view.studentAttendance.title'  | translate}}
+            <span>{{'view.studentAttendance.subtitle' | translate}}</span></h3>
+        <div *ngIf="model.absentAttendanceEvents != null">
+            <ng-container *ngFor="let e of model.absentAttendanceEvents; let i = index">
+                <div *ngIf="i < 2 || showAll" class="row">
+                    <div class="col-lg-12 border-bottom-1">
+                        <h4 class="m-b-0 p-t-15">{{e.dateOfEvent | date: 'M/d/yy'}} - <span
+                                class="label label-good w-150px"
+                                style=" display:inline">{{e.eventDescription | translate}}</span></h4>
+                        <p class="m-b-0 m-t-15">{{e.reason}}</p>
+
+                    </div>
+                </div>
+
+            </ng-container>
+            <div class="float-right" *ngIf="model.absentAttendanceEvents.length > 2" (click)="showAll = !showAll;">
+                <span *ngIf="!showAll">{{'See all' | translate}}</span> <span
+                    *ngIf="showAll">{{'Hide' | translate}}</span>
+            </div>
+        </div>
+        <div *ngIf="model.absentAttendanceEvents == null">
+            <div class="d-flex justify-content-center">
+                <i class="ion-ios-refresh f-s-50 animation-rotate" style="color: #03a9f4"></i>
+            </div>
+        </div>
+    </div>
+</div>

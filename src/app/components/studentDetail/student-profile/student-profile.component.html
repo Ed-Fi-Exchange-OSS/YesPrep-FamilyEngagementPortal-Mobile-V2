@@ -1,0 +1,42 @@
+<div class="card h-100">
+    <div class="card-header">
+        <div class="text-right">
+            <a *ngIf="true" class="btn btn-outline-mail" [routerLink]="['/layout/communications/contacts', model.studentUsi]" >
+                <i class="ion ion-md-mail"></i>
+                <div *ngIf="model.unreadMessageCount > 0" class="bubble-counter blue">{{model.unreadMessageCount}}</div>
+            </a>
+            <span class="badge danger m-r-10" *ngFor="let i of model.indicators" >{{i.indicatorName}}</span>&nbsp;
+        </div>
+    </div>
+    <div class="card-body p-t-0">
+        <div class="text-center">
+            <div class="image-container img-avatar img-size w-75px">
+                <img [src]="cleanUrlImage(model.imageUrl)"  alt="Student profile picture">
+            </div>
+            <h2 class="m-t-15 m-b-2">{{model.name}}</h2>
+            <p class="text-muted m-b-2">{{model.gradeLevel | translate}}</p>
+            <p class="text-muted">{{model.currentSchool}}</p>
+            <p>
+                <span class="badge badge-pill primary" *ngIf="model.hispanicOrLatino">{{'Hispanic or Latino' | translate}}</span>
+                <span class="badge badge-pill success" *ngFor="let r of model.races">{{r | translate}}</span>
+            </p>
+        </div>
+        <div class="row">
+            <div class="col-12 p-t-10 p-b-10">
+                <span class="float-left f-w-600"><i class="icon ion-md-mail p-r-5"></i> {{'Email' | translate}}:</span>
+                <a href="mailto:{{model.email}}" class="float-right"> {{model.email}}</a>
+            </div>
+            <div class="col-12 p-t-10 p-b-10">
+                <span class="float-left f-w-600"><i class="icon ion-md-call p-r-5"></i>{{'Phone' | translate}}:</span>
+                <a href="tel:+{{model.telephone}}" class="float-right">{{model.telephone}}</a>
+            </div>
+        </div>
+        <hr />
+        <h3 *ngIf="model.externalLinks.length > 0">External Links</h3>
+        <div class="row" *ngIf="model.externalLinks.length > 0">
+            <div class="col-12 p-t-10 p-b-10 d-flex flex-column">
+                <a class="d-flex" *ngFor="let link of model.externalLinks" title="{{'Spotlight ' + link.urlType}}" target="_blank" href="{{link.url}}">{{'Spotlight ' + link.urlType}}</a>
+            </div>
+         </div>
+    </div>
+</div>

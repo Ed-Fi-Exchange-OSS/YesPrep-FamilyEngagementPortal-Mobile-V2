@@ -1,0 +1,60 @@
+<button class="dropdown-item" type="button" (click)="openModal(feedback)">{{'Feedback' | translate}}</button>
+
+<ng-template #feedback let-modal>
+<div class="d-flex" >
+    <a class="position-relative rounded-circle w-40px h-40px btn btn-fill-help return-modal"
+      (click)="modal.close('Close click');">
+      <i class="material-icons">keyboard_backspace</i>
+    </a>
+    <h2 class="modal-title language-title-pt-pl" style="padding-left: 110px;">{{'HelpTitle' | translate}}</h2>
+
+  </div>
+<div class="modal-body">
+    <div class="row">
+        <form class="col-12">
+            <div *ngIf="onLoginScreen()" class="col-12 form-group"> 
+                <label for="name">{{'view.feedback.name'  | translate}}</label>
+                <input id="name" name="name" type="text"
+                       class="form-control"
+                       [(ngModel)]="model.name" />
+            </div>
+            <div *ngIf="onLoginScreen()" class="col-12 form-group" >
+                <label for="email">{{'view.feedback.email'  | translate}}</label>
+                <input id="email" name="email" type="text"
+                       class="form-control"
+                       [(ngModel)]="model.email"/>
+            </div>
+            <div class="col-12 form-group">
+                <label for="subject">{{'view.feedback.subject'  | translate}}</label>
+                <input id="subject" name="subject" type="text"
+                       class="form-control"
+                       [(ngModel)]="model.subject"/>
+            </div>
+            <div class="col-12 col-md-12 form-group">
+                <label for="issue">{{'view.feedback.type' | translate}}</label>
+                <select id="issue" name="issue" class="form-control"  [(ngModel)]="model.issue">
+                    <option value="null">-{{'Select option' | translate}}-</option>
+                    <option value="Bug/System Issue">{{'view.feedback.bug' | translate}}</option>
+                    <option value="Comment">{{'view.feedback.comment' | translate}}</option>
+                    <option value="Data Problem">{{'view.feedback.dataProblem' | translate}}</option>
+                    <option value="Feature Request">{{'view.feeback.featureRequest' | translate}}</option>
+                    <option value="Question">{{'view.feedback.question' | translate}}</option>
+                    <option value="Privacy Issue">{{'view.feedback.privacyIssue' | translate}}</option>
+                    <option value="Unable to Login">{{'view.feedback.login' | translate}}</option>
+                </select>
+            </div>
+            <div class="col-12 col-md-12 form-group" >
+                <label for="description">{{'view.feedback.detailedDescription' | translate}}</label>
+                <textarea id="description" name="description" class="w-100 form-control" [(ngModel)]="model.description" rows="4"></textarea>
+            </div>
+        </form>
+    </div>
+    <div id="button-1" class="row">
+        <div class="col-12 col-md-12 m-b-10 mx-auto">
+            <button type="button" class="confirmbutton-yes btn btn-sm btn-danger m-r-10 float-right"
+                (click)="persistFeedback(); modal.close('Close click')">{{'Send' | translate}}</button>
+        </div>
+    </div>
+</div>
+
+</ng-template>

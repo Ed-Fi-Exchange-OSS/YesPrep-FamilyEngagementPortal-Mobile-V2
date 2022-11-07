@@ -1,0 +1,48 @@
+<div class="card">
+    <div class="card-body">
+        <h3 class="card-title d-flex justify-content-between">
+            <div>{{'view.missingAssignments.title' | translate}}
+                <span>{{'view.missingAssignments.subtitle' | translate}}</span></div>
+            <div>{{model.missingAssignmentCount}}</div>
+        </h3>
+        <div *ngIf="model.interpretation != null">
+            <div class="timeline-">
+                <ul class="timeline">
+                    <ng-container *ngFor="let s of model.assignmentSections">
+                        <li *ngIf="showAll || checkSectionDates(s)">
+                            <div>
+                                {{s.courseTitle}} - <a>{{s.staffFullname}} <i class="ion ion-md-chatboxes"></i></a>
+                            </div>
+                            <ul class="timeline position-relative">
+                                <ng-container *ngFor="let a of s.assignments">
+                                    <li *ngIf="showAll || checkDate(a.daysLate)">
+                                        <div class="timeline-bullet" [ngClass]="evalDaysLate(a.daysLate)"></div>
+                                        <div class="timeline-panel f-s-14">
+                                            {{'view.missingAssignments.assigned' | translate}} {{a.daysLate}}
+                                            {{'view.missingAssignments.days' | translate}}
+                                            <span class="m-t-5">{{a.assignmentTitle}}</span>
+                                        </div>
+                                    </li>
+                                </ng-container>
+                            </ul>
+                        </li>
+                    </ng-container>
+                    <li class="text-center link-text" (click)="showAll = !showAll"
+                        *ngIf="model.missingAssignmentCount > 0">
+                        {{ (!showAll ? 'See all' : 'Hide') | translate }}
+                    </li>
+                    <li class="text-center" *ngIf="model.missingAssignmentCount == 0">
+                        {{'No missing assignments' | translate}}
+                    </li>
+                </ul>
+            </div>
+            <a class="float-right mr-2" title="{{model.externalLink.title}}" href="#"
+                (click)="externalUrl(model.externalLink.url)">{{model.externalLink.linkText}}</a>
+        </div>
+        <div *ngIf="model.interpretation == null">
+            <div class="d-flex justify-content-center">
+                <i class="ion-ios-refresh f-s-50 animation-rotate" style="color: #03a9f4"></i>
+            </div>
+        </div>
+    </div>
+</div>

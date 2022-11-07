@@ -1,0 +1,39 @@
+<preloader *ngIf="!showScreen"></preloader>
+<div style="background-color: white; height: 7500px" *ngIf="showScreen">
+    <div class="p-l-24 p-r-24 p-t-75">
+        <img src="./assets/img/logo.png" class="img-logo">
+    </div>
+    <p class="m-t-15" style="text-align: center; color: #0000008a">If you would like to experience the app without a matching account in Skyward. </p>
+    <div class="d-flex justify-content-center">
+        <button mat-button class="btn btn-info" (click)="experienceUser()">{{'Click Here' | translate}}</button>
+    </div>
+    <div class="p-l-24 p-r-24 p-t-15 p-b-15 m-t-15" style="text-align: center;">
+        <h1 style="text-align: center;">{{'Email not found' | translate}}</h1>
+        <p class="m-b-0" style="text-align: center; color: #0000008a" *ngIf="!noEmailShared">
+            {{'We have verified your identity and email as' | translate}}
+        </p>
+        <p class="m-b-0" style="text-align: center; color: #03a9f4; font-size: large;" *ngIf="!noEmailShared">
+            {{email}}
+        </p>
+        <p class="m-b-0" style="text-align: center; color: #0000008a">
+            {{ errorMessage }}
+        </p>
+        <ng-container *ngIf="noEmailShared">
+            <br>
+            <ol style="text-align: left; color: #0000008a" *ngIf="false">
+                <li>Open your iPhone's "Settings" app and tap your name.</li>
+                <li>Tap "Password & Security".</li>
+                <li>Tap "Apps Using Your Apple ID".</li>
+                <li>Find and tap "YES Prep Family Engagement" in your app list.</li>
+                <li>Tap "Stop Using Apple ID" and confirm.</li>
+                <li>Close and then reopen the YES Prep Family Engagement app.</li>
+                <li>Tap "Sign in with Apple".</li>
+                <li>Select "Share My Email" and click "Continue".</li>
+            </ol>
+            <p>For more information, please visit <a href="https://support.apple.com/en-us/HT210426">https://support.apple.com/en-us/HT210426</a></p>
+        </ng-container>
+        <div class="d-flex justify-content-center m-t-15"  *ngIf="!noEmailShared">
+            <button mat-button class="btn btn-info" [routerLink]="['/login']">{{'Try again' | translate}}</button>
+        </div>
+    </div>
+</div>

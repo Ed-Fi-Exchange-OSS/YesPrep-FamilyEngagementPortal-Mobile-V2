@@ -1,0 +1,180 @@
+<div class="tab-content" id="pills-tabGroupsContent">
+    <div class="tab-pane fade show active" id="pills-Students" role="tabpanel" aria-labelledby="pills-Students-tab">
+        <div *ngIf="!hasMessageSelected">
+            <h3>{{'view.teacher.sentMessagesTitle'  | translate}}</h3>
+        <form class="ng-pristine ng-valid">
+        <div class="form-group col-12 align-items-right">
+            <div class="row">
+                <label for="searchTerm">{{'Search group messages'  | translate}}</label>
+                <input type="text" class="form-control" id="searchTerm" name="searchTerm" [(ngModel)]="searchTerm" />
+            </div>
+        </div> 
+            
+           
+        <div class="form-group col-12">
+            <b> 
+                <a data-toggle="collapse" href="#divAdvanceSearch" role="button" aria-expanded="false" aria-controls="divAdvanceSearch"><h4 class="material-500-light-blue">{{'Advanced Search'  | translate}}</h4></a>
+            </b>
+        </div>
+        <div class="collapse row" id="divAdvanceSearch">      
+            <div class="col-12">
+                <div *ngIf="role == 'teacher'"  class="form-group">
+                    <label for="section"> {{'Sections'  | translate}} </label>
+                    <select id="sectionId"  name="section   Id" class="form-control" [(ngModel)]="courseTitle" (change)="onChange()">
+                        <option value="All Sections" [selected]="true">All Sections</option>
+                        <option [(ngValue)]="item.courseTitle" *ngFor="let item of sections">
+                            {{item.localCourseCode}} {{item.courseTitle}} {{ item.classPeriodName}}
+                        </option>
+                    </select>
+                </div>
+                <div class="row" *ngIf="role == 'admin' && showSchools">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="shoolId"> {{'formLabels.school'  | translate}} </label>					  
+                            <select id="schoolId" name="schoolId"
+                                class="form-control"  [(ngModel)]="schoolId" (change)="onChangeSchool()">									 
+                                <option [(ngValue)]="item.schoolId"
+                                    *ngFor="let item of schools"> {{item.nameOfInstitution}}
+                                </option>
+                            </select>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div *ngIf="role == 'admin'" class="form-group">
+                    <label for="gradeId">{{'formLabels.gradeLevel'  | translate}}</label>					  
+                    <select id="gradeId" name="gradeId"
+                        class="form-control"  [(ngModel)]="GradeId" (change)="onChange()">									 
+                        <option [(ngValue)]="item.id"
+                            *ngFor="let item of gradeLevels"> {{item.name}}
+                        </option>
+                    </select>
+                </div>
+                <div *ngIf="role == 'admin'" class="form-group">
+                    <label for="programId"> {{'formLabels.program'  | translate}} </label>					  
+                    <select id="programId" name="programId"  (ngModelChange)="onChange()"
+                        class="form-control"  [(ngModel)]="selectedProgramId">									 
+                        <option [(ngValue)]="item.id"
+                            *ngFor="let item of programs"> {{item.name}}
+                        </option>
+                    </select>
+                </div>
+
+            </div>
+            
+            <div class="form-group col-12">
+                <h4>Sent Date</h4>
+            </div>
+            <div class="dates-container col-12">
+            <div class="input-group from-color">
+                <label for="section"> From Date</label>
+                <div class="input-group-append  m-0">
+                <input class="form-control  m-0" placeholder="mm-dd-yyyy"
+                name="dp" [(ngModel)]="initDate" ngbDatepicker #d="ngbDatepicker">
+                <button class="btn btn-outline-secondary calendar m-0" (click)="d.toggle()" type="button"></button>
+                </div>
+            </div>
+            <div class="input-group to-color">
+                <label for="section"> To Date &nbsp;&nbsp;&nbsp;&nbsp; </label>
+                <div class="input-group-append  m-0">
+                <input class="form-control  m-0" placeholder="mm-dd-yyyy"
+                name="dpe" [(ngModel)]="endDate" ngbDatepicker #de="ngbDatepicker">
+                <button class="btn btn-outline-secondary calendar m-0" (click)="de.toggle()" type="button"></button>
+                </div>
+            </div>
+        </div>
+            <div class="p-t-2 form-group col-12 clean-filters align-items-right">
+                <b> 
+                    <a data-toggle="collapse" role="button" aria-expanded="false" (click)="cleanAdvancedSearch()"><h4 class="material-500-light-blue">Clear filters</h4></a>
+                </b>
+            </div>
+        </div>
+            <!--<div class="form-group col-12">
+                <div class="input-group">
+                    <label for="section"> To Date &nbsp;&nbsp;&nbsp;&nbsp; </label>
+                    <div class="input-group-append">
+                    <input class="form-control" placeholder="mm-dd-yyyy"
+                    name="dpe" [(ngModel)]="endDate" ngbDatepicker #de="ngbDatepicker">
+                    <button class="btn btn-outline-secondary calendar" (click)="de.toggle()" type="button"></button>
+                    </div>
+                </div>
+                
+            </div>-->
+
+            <div class="row">
+                <div class="col-12 align-items-right">
+                    <div class="d-flex justify-content-center align-items-center btn btn-fill-search" 
+                        (click)="searchMessages()">
+                        <span>{{'Search' | translate }}</span><i class="ion ion-md-search"></i>
+                    </div>
+                </div>
+            </div>
+        </form>
+            <div *ngIf="messagesFounded && messagesFounded.length > 0" class="message-sent-list form-group col-12">
+                <div *ngFor="let message of messagesFounded ">
+                    <div class="message-sent-list-item" (click)="messageDetail(message)">
+                        <div class="message-sent-list-item-header">
+                            <span><b>{{message.subject}}</b></span>
+                            <span>{{message.dateSent| date:'shortDate' }}</span>
+                        </div>
+                        <div class="message-sent-list-item-audiece">
+                            <span>To: {{message.audience}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div *ngIf="messagesFounded && !(messagesFounded.length > 0)">
+                <h4>No messages found</h4>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="hasMessageSelected">
+        <div class="row">
+            <div class="col-12">
+                <i (click)="returnToList()" class="ion ion ion-md-arrow-back "></i>
+            </div>
+        </div>
+        <div class="row message-detail">
+                <div class="col-12 message-detail-header">
+                    <span><b>{{selectedMessage.subject}}</b></span>
+                    <span>{{selectedMessage.dateSent | date:'shortDate'  }}</span>
+                </div>
+                <div class="col-12 message-detail-recipients">
+                    <span>To: {{selectedMessage.audience}}</span>
+                </div>
+                <div class="col-12 message-detail-content">
+                    <p *ngIf="!selectedMessage.bodyMessage.includes('ypparentportalprodstor')" style="margin-bottom: 0px; line-height: normal;"> 
+                        {{selectedMessage.bodyMessage}}
+                    </p>
+                    <div *ngIf="selectedMessage.bodyMessage.includes('ypparentportalprodstor')">
+                        <!-- only file message -->
+                        <div *ngIf="selectedMessage.bodyMessage.startsWith('https')">
+                            <img *ngIf="selectedMessage.bodyMessage.includes('-ypimg-')" (click)="downloadFile(selectedMessage.bodyMessage)" src="{{selectedMessage.bodyMessage}}" style="max-width:70%; height:auto" />
+                            <span *ngIf="selectedMessage.bodyMessage.includes('-ypdoc-')" style="font-size:1rem;">
+                                <button class="btn btn-info" (click)="downloadFile(selectedMessage.bodyMessage)" style="border: none;">
+                                    <i class="ion ion ion-md-download"></i>
+                                    Download File
+                                </button>
+                            </span>
+                        </div>
+                        <!-- group message with file attached -->
+                        <div *ngIf="!selectedMessage.bodyMessage.startsWith('https')">
+
+                            <img *ngIf="selectedMessage.bodyMessage.includes('-ypimg-')" (click)="downloadFile(selectedMessage.bodyMessage)" src="{{splitMessage(selectedMessage.bodyMessage,2)}}" style="max-width:70%; height:auto" />
+                            <span *ngIf="selectedMessage.bodyMessage.includes('-ypdoc-')" style="font-size:1rem;">
+                                <button class="btn btn-info" (click)="downloadFile(selectedMessage.bodyMessage)" style="border: none;">
+                                    <i class="ion ion ion-md-download"></i>
+                                    Download File {{splitMessage(selectedMessage.bodyMessage,1)}}
+                                </button> 
+                            </span>
+                            
+                            <!-- <a href="{{splitMessage(selectedMessage.bodyMessage,1)}}">{{splitMessage(selectedMessage.bodyMessage,1)}}</a> -->
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,54 @@
+<h3> {{'Telephone Numbers'  | translate}}</h3>
+<div class="row align-items-center" [ngClass]="{'add-separator':!last}" *ngFor="let t of model; let $index = index; last as last" >
+    <div class="col-md-3 m-b-10">
+        <label for="telephoneNumber{{$index}}">{{'view.telephone.telephoneNumber' | translate}}</label>
+        <input id="telephoneNumber{{$index}}" type="text" class="form-control" name="telephoneNumber"
+               [(ngModel)]="t.telephoneNumber"
+               placeholder="{{'Telephone number' | translate}}"
+               min="0"
+               inputmode="numeric"
+               required
+               (change)="onChange()"
+               mask = "(000) 000-0000"
+               [readonly] = "!t.editable"
+               [disabled] = "!t.editable"
+                />
+    </div>
+    <div class="col-md-3 m-b-10">
+        <label for="telephoneNumberTypeId{{$index}}">{{'view.telephone.telephoneNumberType' | translate}}</label>
+        <select id="telephoneNumberTypeId{{$index}}" 
+        class="form-control" 
+        [(ngModel)]="t.telephoneNumberTypeId" 
+        name="telephoneNumberType" 
+        (change)="onChange()" 
+        aria-readonly="true" 
+        required
+        [disabled] = "!t.editable">
+        <option [(ngValue)]="tt.telephoneNumberTypeId" *ngFor="let tt of telephoneTypes" (change)="onChange()">
+            {{tt.shortDescription | translate}}
+        </option>
+        </select>
+    </div>
+    <div class="col-md-6 m-b-10">
+        <mat-radio-group aria-label="Select an option"> 
+            <mat-radio-button ngDefaultControl name="primaryMethodOfContact{{$index}}" value="1" [(checked)]="t.primaryMethodOfContact" (click)="choosePrimaryeTelephone(t)" >{{'Primary' | translate}} </mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <div class="col-md-6 m-b-10">
+        <mat-checkbox ngDefaultControl name="textCapable{{$index}}" [(checked)]="t.textMessageCapabilityIndicator" [(ngModel)]="t.textMessageCapabilityIndicator" (change)="onChange()" > {{'Phone is able to receive text messages' | translate}}</mat-checkbox>
+    </div>
+   <!-- <div class="col-md-3 m-b-10">
+        <label for="telCarrierType{{$index}}">{{'view.telephone.telephoneCarrierType' | translate}}</label>
+        <select id="telCarrierType{{$index}}" class="form-control" [(ngModel)]="t.telephoneCarrierTypeId" name="telCarrierType{{$index}}" (change)="onChange()">
+        <option  *ngFor="let tm of textMessageCarrierTypes"  [(ngValue)]="tm.textMessageCarrierTypeId" (change)="onChange()">{{tm.shortDescription}}</option>
+        </select>
+    </div> -->
+    <div class="col-12 col-md-1 m-b-10" *ngIf="!t.primaryMethodOfContact">
+        <confirm-button [index]="$index" [model]="model" (onModelChange)="onDelete" [(executeAfterDelete)]="executeAfterDelete"></confirm-button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 ">
+        <button class="btn btn-info float-right" placement="bottom" ngbTooltip="{{'Add new telephone' | translate}}" (click)="add()" triggers="click:blur" title="Add another number"><i class="icon ion-md-add-circle" aria-hidden="true"></i></button>
+    </div>
+</div>

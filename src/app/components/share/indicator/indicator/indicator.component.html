@@ -1,0 +1,15 @@
+<div class="card h-100">
+    <div class="card-body text-center text-black" [ngClass]="bgclass">
+        <div *ngIf="!showLoader">
+            <h3 class="m-t-15 text-black" placement="bottom" ngbTooltip="tooltip" triggers="click:blur">
+                {{indicatorTitle}}</h3>
+            <span class="m-t-10 f-s-50 font-weight-bold">{{value}}</span>
+            <p class="m-t-10">{{textualEvaluation}}</p>
+        </div>
+        <div *ngIf="showLoader">
+            <div class="d-flex justify-content-center m-t-105">
+                <i class="ion-ios-refresh f-s-50 animation-rotate" style="color: #03a9f4"></i>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+<div style="background-color: white; height: 100%;" class="m-3">
+    <div class="p-l-24 p-r-24 p-t-24">
+        <img src="./assets/img/logo.png" class="img-logo">
+    </div>
+    <div class="p-l-24 p-r-24 p-t-15 p-b-15" style="text-align: center;">
+        <h1 style="text-align: center;">{{'Welcome to the' | translate}} Family Engagement Portal</h1>
+        <h3 style="text-align: center; color: rgba(0, 0, 0, 0.54)">
+            {{'Take a moment to set up the Portal' | translate}}.
+        </h3>
+        <span style="color: rgba(0, 0, 0, 0.54)">({{'You can always change this in your profile' | translate}})</span>
+    </div>
+    <form [formGroup]="wizardFromGroup" class="m-l-15 m-r-15">
+        <mat-form-field appearance="fill" class="col-md-12 col-md-12">
+            <mat-label>{{'Select your preferred language' | translate}}</mat-label>
+            <mat-select formControlName="languageSel" >
+                <mat-option *ngFor="let item of languages" [value]="item.code" (click)="SelectLanguage(item)">
+                    {{item.nativeName +' - '+ item.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill" class="col-md-12 col-md-12">
+            <mat-label>{{'Select your preferred method of contact' | translate}}</mat-label>
+            <mat-select formControlName="methodOfContact" (ngModelChange)="methodOfContactChange($event)">
+                <mat-option *ngFor="let mc of methodOfContactTypes" [value]="mc.methodOfContactTypeId" >
+                    {{mc.description | translate}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill" class="col-md-12 col-md-12" *ngIf="selectTelephone">
+            <mat-label>{{'Select a telephone' | translate}}</mat-label>
+            <mat-select formControlName="telephoneSelect" (ngModelChange)="telephoneChange($event)">
+                <mat-option *ngFor="let t of profile.telephoneNumbers" [value]="t.telephoneNumber" >
+                   {{ t.telephoneNumber }}</mat-option>
+                   <mat-option [value]="'NewPhone'">
+                       {{'Add new telephone' | translate}}
+                   </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-md-12 col-md-12" *ngIf="inputEmailShow">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="emailNew" type="email" value="{{primaryEmail}}" readonly>
+        </mat-form-field>
+        <mat-form-field class="col-md-12 col-md-12" *ngIf="inputNewTelephoneShow">
+            <div class="col-md-6 m-b-10">
+            <mat-label>{{'Telephone' | translate}}</mat-label>
+            <input matInput placeholder="+1 (000) 000-0000" formControlName="telephoneNew"  mask = "(000) 000-0000" prefix="+1" [value]="8712503508" [showMaskTyped]="true" placeHolderCharacter="*">
+          </div> 
+          <!--<div class="col-md-6 m-b-10">
+                <mat-radio-group aria-label="Select an option"> 
+                    <mat-radio-button ngDefaultControl name="primaryMethodOfContact" value="true" formControlName="primaryMethodOfContact"  >{{'Primary' | translate}} </mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="col-md-6 m-b-10">
+                <mat-checkbox ngDefaultControl name="textCapable" value="true" formControlName="textMessageCapabilityIndicator" > {{'Phone is able to receive text messages' | translate}}</mat-checkbox>
+            </div>-->
+        </mat-form-field>
+        
+        <!--<mat-form-field appearance="fill" class="col-md-12 col-md-12" *ngIf="inputNewTelephoneShow">
+            <mat-label>{{'view.telephone.telephoneCarrierType' | translate}}</mat-label>
+            <mat-select formControlName="telephoneCarrier">
+                <mat-option *ngFor="let t of textMessageCarrierTypes" [value]="t.textMessageCarrierTypeId">
+                   {{t.shortDescription}}</mat-option>
+            </mat-select>
+        </mat-form-field> -->
+        <br>
+        <div class="m-l-15 m-r-15">
+            <button mat-button (click)="doneWiz()" class="btn btn-info w-100" [disabled]="wizardFromGroup.invalid" >{{'Done' | translate}}</button>
+        </div>
+    </form>
+
+    <div class="m-t-15 m-b-15 m-l-15 m-r-15" style="background-color: white;">
+        <div class="d-flex justify-content-center">
+            <span (click)="doneWithOutFinish()" >{{'Skip' | translate}}</span>
+        </div>
+    </div>
+</div>

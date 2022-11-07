@@ -1,0 +1,109 @@
+<div class="card">
+    <div class="card-body">
+        <h3 class="card-title">{{'view.studentCalendar.title' | translate}}
+            <span>{{'view.studentCalendar.subtitle' | translate}}</span></h3>
+        <div *ngIf="model != null">
+            <div class="m-b-5 text-center" *ngIf="model.days.length > 1">{{('Todays Schedule' | translate)}}
+                {{model.days[0].date | date : 'dd'}} - {{model.days[model.days.length - 1].date | date : 'dd'}}</div>
+            <div>
+                <table class="calendar">
+                    <thead>
+                        <tr>
+                            <th>{{'Time' | translate}}</th>
+                            <ng-container *ngFor="let d of _daysToShow; let i = index">
+                                <th class="w-100px" *ngIf="i < 3">{{d.dayName | translate}}</th>
+                            </ng-container>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="f-s-13">7am</td>
+                            <ng-container *ngFor="let d of _daysToShow; let i = index">
+                                <td *ngIf="i < 3">
+                                    <div class="calendar-col">
+                                        <div class="calendar-event" *ngFor="let e of d.events"
+                                            [ngClass]="calendarEventColor(e)"
+                                            [ngStyle]="{'top':e.top+'px', 'height':e.height+'px'}" appendTo="body"
+                                            placement="bottom"
+                                            ngbTooltip="{{(e.startTime | date:'h:mm a') + '  -  ' + (e.endTime | date:'h:mm a') + ' &#013;&#010;' + ('Classroom Number' | translate) + ': ' + e.classroomIdentificationCode + ' ' + ('Teacher' | translate) + ': ' + e.name }}"
+                                            triggers="click:blur">
+                                            <div class="calendar-title">{{e.courseTitle}}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </ng-container>
+                        </tr>
+                        <tr>
+                            <td class="f-s-13">8am</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        </tr>
+                        <tr>
+                            <td class="f-s-13">9am</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        </tr>
+                        <tr>
+                            <td class="f-s-13">10am</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        </tr>
+                        <tr>
+                            <td class="f-s-13">11am</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        </tr>
+                        <tr>
+                            <td class="f-s-13">12pm</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        </tr>
+                        <tr>
+                            <td class="f-s-13">1pm</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        </tr>
+                        <tr>
+                            <td class="f-s-13">2pm</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        </tr>
+                        <tr>
+                            <td class="f-s-13">3pm</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        </tr>
+                        <tr>
+                            <td class="f-s-13">4pm</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div *ngIf="model == null">
+            <div class="d-flex justify-content-center">
+                <i class="ion-ios-refresh f-s-50 animation-rotate" style="color: #03a9f4"></i>
+            </div>
+        </div>
+    </div>
+</div>

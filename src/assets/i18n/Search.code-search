@@ -1,0 +1,9 @@
+# Query: yout p
+
+2 results - 2 files
+
+src/assets/i18n/lo-Lao.json:
+  1: ⟪ 24543 characters skipped ⟫ອນຮັບສູ່","Take a moment to setup the portal":"ໃຊ້ເວລາບຶດຫນຶ່ງເພື່ອຕັ້ງportal","Select your preferred language":"ເລືອກພາສາທີ່ທ່ານຕ້ອງການ","Select your preferred method of contact":"ເລືອກວິທີການຕິດຕໍ່ your preferred","Telephone":"ໂທລະໂຄ່ງ","Skip":"Skip","You can always change this in your profile":"ທ່ານສາມາດປ່ຽນແປງນີ້ໄດ້ສະເຫມີໃນ profile ຂອງທ່ານ","Text Message (SMS)":"ຂໍ້ຄວາມ (SMS)","App Notifications":"ການແຈ້ງApp","Select a telephone":"ເລືອກໂທລະສັບ","Done":"ເຮັດແລ້ວ","This application uses the same":"ໂປຣໂມຊັນນີ້ໃຊ້ແບບດຽວກັນ","email registered in Skyward.":"ອີເມວທີ່ລົງທະບຽນໃນ Skyward.","email registered in your student information system.":"ອີເມວທີ່ລົງທະບຽນໃນລະບົບຂໍ້ມູນນັກສຶກສາຂອງທ່ານ.","Questions?":"ຄໍາຖາມ?","Contact your registrar or see the":"ຕິດຕໍ່ຜູ້ລົງທະບຽນຂອງທ່ານ ຫຼື ເບິ່ງ","Email Not Found":"ອີເມລທີ່ບໍ່ພົບເຫັນ"}
+
+src/assets/i18n/sk-sk.json:
+  1: ⟪ 25025 characters skipped ⟫me to":"Vitajte na","Take a moment to setup the portal":"Nastavenie portálu na chvíľu","Select your preferred language":"Výber preferovaného jazyka","Select your preferred method of contact":"Vyberte your preferovaný spôsob kontaktu","Telephone":"Telefónne","Skip":"Preskočiť","You can always change this in your profile":"Vždy to môžete zmeniť vo svojom profile","Text Message (SMS)":"Textová správa (SMS)","App Notifications":"Upozornenia aplikácií","Select a telephone":"Výber telefónu","Done":"Urobiť","This application uses the same":"Táto aplikácia používa rovnaké","email registered in Skyward.":"e-mail registrovaný v Skyward.","email registered in your student information system.":"e-mail registrovaný vo vašom informačnom systéme pre študentov.","Questions?":"Otázky?","Contact your registrar or see the":"Obráťte sa na svojho registrátora alebo si pozrite","Email Not Found":"E-mail sa nenašiel"}

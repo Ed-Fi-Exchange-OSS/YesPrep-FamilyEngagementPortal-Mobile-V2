@@ -1,0 +1,51 @@
+<div class="card">
+    <div class="card-header text-right student-card-header p-b-0">
+        <a *ngIf="true" class="btn btn-outline-mail" [routerLink]="['/layout/communications/contacts', studentObj.studentUsi]">
+            <i class="ion ion-md-mail"></i>
+            <div *ngIf="studentObj.unreadMessageCount > 0" class="bubble-counter blue">{{studentObj.unreadMessageCount}}</div>
+        </a>
+        <span class="badge danger m-r-10" *ngFor="let i of studentObj.indicators" >{{i.indicatorName}}</span>&nbsp;
+        <alerts-modal [model]="studentObj"></alerts-modal>
+    </div>
+    <div class="card-body p-b-3">
+        <div class="text-center">
+            <div class="image-container img-avatar img-size w-75px"><img [src]="cleanUrlImage(studentObj.imageUrl)"  alt="Profile Picture"></div>
+            <h2 class="m-t-3 m-b-2 d-flex justify-content-center align-items-center h-">{{studentObj.name}}</h2>
+            <p class="text-muted m-b-2 card-grade-level">{{studentObj.gradeLevel | translate}}</p>
+            <p class="text-muted m-b-0">{{studentObj.currentSchool}}</p>
+            <a class="btn btn-block btn-outline-primary btn-rounded" [routerLink]="['/layout/studentdetail', studentObj.studentUsi]">{{'View Student Detail' | translate}}</a>
+        </div>
+    </div>
+    <div class="card-footer p-t-0 p-b-0 m-t-10">
+        <div class="row row-footer">
+            <div class="border-bottom-1 footer-item footer-item1 d-flex justify-content-center align-items-center flex-column m-t-10" *ngIf="studentAbc.absence" [ngClass]="firstRowIndicators">
+                <interpretation-icon [model]="studentObj.adaAbsentInterpretation"></interpretation-icon>
+                <h3 class=" text-center m-b-0" placement="top" ngbTooltip="{{'Absence ADA' | translate}}" triggers="click:blur">{{'Absences' | translate}}</h3>
+                <a class="text-center d-block text-muted" placement="bottom" ngbTooltip="{{'Absence ADA' | translate}}" triggers="click:blur">
+                    <b>{{studentObj.adaAbsences}}</b>
+                </a>
+            </div>
+            <div class="border-bottom-1 footer-item footer-item2 d-flex justify-content-center align-items-center flex-column m-t-10" *ngIf="studentAbc.behavior" [ngClass]="secondRowIndicators" >
+                <interpretation-icon [model]="studentObj.ytdDisciplineInterpretation"></interpretation-icon>
+                <h3 class="text-ellipsis text-center m-b-0" placement="bottom" ngbTooltip="{{'Behavior Tooltip' | translate}}" triggers="click:blur">{{'Behavior' | translate}}</h3>
+                <a class="text-center d-block text-muted" >
+                    <b>{{studentObj.ytdDisciplineIncidentCount}}</b>
+                </a>
+            </div>
+            <div class="border-bottom-1 footer-item footer-item3 d-flex justify-content-center align-items-center flex-column m-t-10" *ngIf="studentAbc.courseAverage" [ngClass]="firstRowIndicators">
+                <interpretation-icon [model]="(showStudentGPA(studentObj.gradeLevel)? studentObj.gpaInterpretation : studentObj.courseAverage.evaluation)"></interpretation-icon>
+                <h3 class="text-center m-b-0 " placement="bottom" ngbTooltip="{{(showStudentGPA(studentObj.gradeLevel)? 'GPA' : 'Course Average') | translate}}" triggers="click:blur">{{showStudentGPA(studentObj.gradeLevel)? 'GPA' : 'Abv Course Average' | translate}} </h3>
+                <a class="text-center d-block text-muted">
+                    <b>{{(showStudentGPA(studentObj.gradeLevel) ? studentObj.ytdgpa + '/4.0' : (studentObj.courseAverage.gradeAverage | number : '1.0-1') + '/100')}}</b>
+                </a>
+            </div>
+            <div class="border-bottom-1 footer-item footer-item4  d-flex justify-content-center align-items-center flex-column m-t-10" *ngIf="studentAbc.missingAssignments" [ngClass]="secondRowIndicators">
+                <interpretation-icon model="studentObj.missingAssignmentsInterpretation"></interpretation-icon>
+                <h3 class="text-ellipsis text-center m-b-0" placement="bottom" ngbTooltip="{{'Missing Assignments' | translate}}" triggers="click:blur">{{'Abv Missing Assignments' | translate}}</h3>
+                <a class="text-center d-block text-muted">
+                    <b>{{studentObj.missingAssignments}}</b>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

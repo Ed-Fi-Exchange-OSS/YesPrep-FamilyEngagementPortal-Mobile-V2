@@ -1,0 +1,127 @@
+<img alt="Success Team Member" aria-haspopup="true" aria-expanded="False" [src]="cleanUrlImage(profile.imageUrl)"
+    (click)="openScrollableContent(longContent)" class="w-100px h-100px" />
+<ng-template #longContent let-modal>
+    <div class="d-flex justify-content-between" [ngClass]="profile.color">
+        <a class="position-relative rounded-circle w-40px h-40px btn btn-fill-help return-modal"
+            (click)="modal.close('Close click')">
+            <i class="material-icons">keyboard_backspace</i>
+        </a>
+        <div>
+            <h2 class="modal-title">{{profile.name}}</h2>
+        </div>
+        <div></div>
+        <div></div>
+    </div>
+    <div class="modal-body">
+        <div class="profile-image">
+            <div class="image-container img-avatar success-team-member img-size w-100px h-100px">
+                <img alt="Student Picture" [src]="cleanUrlImage(profile.imageUrl)" />
+            </div>
+        </div>
+        <div class="card-body">
+            <a *ngIf="profile.email" href="mailto:{{profile.email}}">{{profile.email}}</a>
+            <span *ngIf="profile.highlyQualifiedTeacher" class="badge danger m-b-10" placement="bottom"
+                ngbTooltip="{{'Highly Qualified' | translate}}" triggers="click:blur">{{'Highly Qualified' | translate}}</span>
+            <br *ngIf="profile.highlyQualifiedTeacher" />
+            <div class="text-center">
+            <span *ngIf="profile.emergencyContactStatus" class="badge danger m-b-10" placement="bottom"
+                ngbTooltip="{{'Emergency Contact' | translate}}" triggers="click:blur">{{'Emergency Contact' | translate}}</span>
+            </div>
+            <!--<a *ngIf="profile.relationToStudent != 'Sibling' && profile.chatEnabled && true"
+                [routerLink]="['/layout/communications/contacts', profile.studentUsi]" 
+                (click)="modal.close('Close click'); viewPage();" class="btn btn-outline-primary position-relative">-->
+
+            <!--<a *ngIf="profile.relationToStudent != 'Sibling' && profile.chatEnabled && true"
+               (click)="modal.close('Close click'); goToChat();" class="btn btn-outline-primary position-relative">-->
+                <!-- , profile.studentUsi, profile.uniqueId, profile.personTypeId, profile.unreadMessageCount -->
+                <a *ngIf="profile.relationToStudent != 'Sibling' && profile.chatEnabled && true"
+                [routerLink]="['/layout/communications/convertation/'+ profile.studentUsi + '/' + profile.uniqueId + '/'+  profile.personTypeId + '/0' ]"
+                (click)="modal.close('Close click'); viewPage();" class="btn btn-outline-primary position-relative">
+
+                <i
+                    class="ion ion-md-text"></i>
+                <div *ngIf="profile.unreadMessageCount > 0" class="bubble-counter blue">{{profile.unreadMessageCount}}
+                </div> <span>{{'Message' | translate}}</span>
+            </a>
+            <hr
+                *ngIf="(profile.addresses !== null && profile.addresses.length > 0) ||  (profile.telephone !== null && profile.telephone.length  > 0) || (profile.emails !== null && profile.emails.length > 0)" />
+            <!-- Contact Information Section -->
+            <h5
+                *ngIf="(profile.addresses !== null && profile.addresses.length > 0) ||  (profile.telephone !== null && profile.telephone.length  > 0) || (profile.emails !== null && profile.emails.length > 0)">
+                {{'Contact Information' | translate}}</h5>
+            <div class="row">
+                <div class="col-12 d-flex align-items-stretch flex-wrap">
+                    <address class="m-b-0">
+                        <div *ngFor="let t of profile.telephone; first as first;">
+                            <i class="ion ion-md-call" *ngIf="first"></i> <a href="tel:{{t}}"
+                                [ngClass]="{'m-l-15':!first}" style="outline:none">{{t}}</a>
+                        </div>
+
+                        <div [ngClass]="{'m-t-8':first}" *ngFor="let a of profile.addresses; first as first"
+                            class="text-truncate" placement="bottom"
+                            ngbTooltip="{{a.streetNumberName}}, {{a.city}}, {{a.state}} {{a.postalCode}}" triggers="click:blur">
+                            <i class="ion ion-md-pin"></i> {{a.streetNumberName}}<br />
+                            <span class="m-l-12">{{a.city}}, {{a.state}} {{a.postalCode}}</span>
+                        </div>
+                        <!-- *ngFor="let e of profile.emails; first as first" -->
+                        <ng-container *ngFor="let e of profile.emails; first as first">
+                            <div [ngClass]="{'m-t-8':first}">
+                                <i class="ion ion-md-mail" *ngIf="first"></i>
+                                <a class="text-truncate popover-mail-limiter" href="mailto:{{e}}"
+                                    tooltip-placement="bottom" ngbTooltip="{{e}}" triggers="click:blur">{{e}}</a>
+                            </div>
+                        </ng-container>
+                    </address>
+                </div>
+            </div>
+
+            <!-- Qualifications -->
+            <div
+                *ngIf="profile.yearsOfTeachingExperience || profile.highestCompletedLevelOfEducation || (profile.languages !== null && profile.languages.length)">
+                <hr />
+                <h5>{{'Qualifications' | translate}}</h5>
+                <ul>
+                    <li>{{profile.yearsOfTeachingExperience}}
+                        <span>{{'Years of Teaching Experience' | translate}}</span></li>
+                    <li *ngIf="profile.highestCompletedLevelOfEducation">{{'Education' | translate}}:
+                        <span>{{profile.highestCompletedLevelOfEducation}}</span></li>
+                    <li *ngIf="profile.languages !== null && profile.languages.length">
+                        {{'Languages' | translate}}:
+                        <ul>
+                            <li *ngFor="let l of profile.languages">{{l}}</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Credentials Section -->
+            <hr *ngIf="profile.credentials && (profile.credentials !== null && profile.credentials.length)" />
+            <h5 *ngIf="profile.credentials && (profile.credentials !== null && profile.credentials.length)">
+                {{'Credentials' | translate}}</h5>
+            <div class="text-left" *ngIf="(profile.credentials !== null && profile.credentials)">
+                <ul>
+                    <li *ngFor="let c of profile.credentials">{{c}}</li>
+                </ul>
+            </div>
+
+            <!-- Bio Section -->
+            <div *ngIf="profile.shortBiography">
+                <hr />
+                <h5>{{'Short Biography' | translate}}</h5>
+                <div [innerHtml]="profile.shortBiography">
+                </div>
+            </div>
+
+            <!-- Sibling Grade Level Info Section -->
+            <div *ngIf="profile.gradeLevel">
+                <hr>
+                <h5>{{'Education' | translate}}</h5>
+                <span class="d-block">{{profile.nameOfInstitution}}</span>
+                <ul>
+                    <li class="text-left">{{profile.gradeLevel}}</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</ng-template>
