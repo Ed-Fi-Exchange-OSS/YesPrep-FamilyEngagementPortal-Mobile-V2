@@ -188,6 +188,46 @@ environment = {
 ## Customize the Application
 To customize the application to look and feel like its yours we recomend updating these configuration parameters:
 
+
+
+ # Errors you could face and how to solve
+
+> ## Could not reserve enough space for  object heap.
+
+Add new environment variable:
+
+variable name: _JAVA_OPTIONS
+
+variable value: -Xmx512M
+
+![image-2022-10-10-18-26-09-135 (2)](https://user-images.githubusercontent.com/85459544/200438807-42337452-e67e-4641-82cb-d6929c5dc6ca.png)
+
+
+
+> ## Build-tool 33.0.0 is missing DX at C:\Users\admin\AppData\Local\Android\Sdk\build-tools\33.0.0\dx.bat
+
+FAILURE: Build failed with an exception.* What went wrong:
+Could not determine the dependencies of task ':app:compileDebugJavaWithJavac'.
+> Installed Build Tools revision 33.0.0 is corrupted. Remove and install again using the SDK Manager.
+
+to solve the issue:
+
+cd  C:\Users\admin\AppData\Local\Android\Sdk\build-tools\33.0.0\lib
+
+copy and paste the file d8.jar
+![image-2022-10-13-09-34-31-371](https://user-images.githubusercontent.com/85459544/200438915-d30bfbf0-3057-4c28-ba86-d32395db1ead.png)
+
+then rename d8 - copy.jar  to dx.jar 
+![image-2022-10-13-09-36-17-344](https://user-images.githubusercontent.com/85459544/200438959-06e3255b-a373-4b86-b49c-8031bd2b2260.png)
+
+go back to the folder 33.0.0,  copy and paste the file d8.bat, then rename the file d8 - Copy.bat to   dx .bat (no spaces)
+
+![image-2022-10-13-09-37-36-094 (2)](https://user-images.githubusercontent.com/85459544/200439027-166e83a2-6753-4c04-a132-f7275753fd52.png)
+
+> ## Multiple directories for Development Kit.
+Configure correctly your environment variables  or in Android Studio, go to the Event Logs and select the correct Directory for your Development Kit.
+![image-2022-10-19-09-47-45-418](https://user-images.githubusercontent.com/85459544/200439535-bd69df04-ed24-4886-9181-483a22e58545.png)
+
 ### Logo
 <!-- 
 ![img_folders](https://github.com/Student1-org/ParentPortalMobile/blob/master/readme_files/ss_11.png?raw=true)
